@@ -1,0 +1,873 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Portfolio with Search Filter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  >
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Project Portfolio</h1>
+            <p>Click on any project to view details and run it</p>
+        </header>
+
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search projects by name, technology, or description...">
+                <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <!-- <div class="filter-tags" id="filter-tags">
+                <div class="filter-tag active" data-filter="all">All Projects</div>
+                <div class="filter-tag" data-filter="calculator">Calculator</div>
+                <div class="filter-tag" data-filter="box">Box Projects</div>
+                <div class="filter-tag" data-filter="form">Forms</div>
+                <div class="filter-tag" data-filter="app">Applications</div>
+                <div class="filter-tag" data-filter="storage">Storage</div>
+            </div> -->
+        </section>
+
+        <section class="projects-container" id="projects-container">
+            <!-- Projects will be dynamically loaded here -->
+        </section>
+
+        <div class="project-modal" id="project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Project Title</h2>
+                    <button class="close-modal" id="close-modal">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Project details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="launch-btn" id="launch-project">Launch Project</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Project Portfolio &copy; 2023 | All projects are functional and ready to run</p>
+        </footer>
+    </div>
+
+
+        <title>BMI Calculator</title>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-weight-scale"></i> BMI Calculator</h1>
+        
+        <div class="input-group">
+            <label for="weight"><i class="fas fa-weight"></i> Weight (kg)</label>
+            <div class="input-wrapper">
+                <input type="number" id="weight" placeholder="Enter your weight" min="20" max="300" step="0.1">
+                <span class="unit">kg</span>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label for="height"><i class="fas fa-ruler-vertical"></i> Height (cm)</label>
+            <div class="input-wrapper">
+                <input type="number" id="height" placeholder="Enter your height" min="100" max="250" step="0.1">
+                <span class="unit">cm</span>
+            </div>
+        </div>
+        
+        <button onclick="calculateBMI()">
+            <i class="fas fa-calculator"></i> Calculate BMI
+        </button>
+        
+        <div class="result-container" id="resultContainer">
+            <h3>Your BMI Result</h3>
+            <div class="bmi-value" id="bmiValue">00.00</div>
+            <div class="bmi-category" id="bmiCategory">Normal</div>
+            
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>Underweight</h4>
+                    <p>&lt; 18.5</p>
+                </div>
+                <div class="info-box">
+                    <h4>Normal</h4>
+                    <p>18.5 - 24.9</p>
+                </div>
+                <div class="info-box">
+                    <h4>Overweight</h4>
+                    <p>25 - 29.9</p>
+                </div>
+                <div class="info-box">
+                    <h4>Obese</h4>
+                    <p>≥ 30</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>BMI = weight(kg) / height(m)² | Healthy BMI range: 18.5 to 24.9</p>
+        </footer>
+    </div>
+
+    <!-- //todo list -->
+     <body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-list-check"></i> Todo List</h1>
+            <p class="subtitle">Organize your tasks efficiently</p>
+        </header>
+        
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <button id="addBtn">Add</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="totalTasks">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="completedTasks">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="pendingTasks">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        
+        <div class="todo-list" id="todoList">
+            <!-- Tasks will be added here -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>No tasks yet</h3>
+                <p>Add your first task above!</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" id="markAllBtn">Mark All Complete</button>
+            <button class="control-btn clear" id="clearCompletedBtn">Clear Completed</button>
+        </div>
+        
+        <footer>
+            <p>Tasks are saved in your browser's local storage</p>
+        </footer>
+    </div>
+
+        <!-- //form project -->
+
+        <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Project with Validation</title>
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-signature"></i> Registration Form</h1>
+            <p class="subtitle">Complete the form with valid information</p>
+        </header>
+        
+        <form id="registrationForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="firstName" class="required">First Name</label>
+                    <input type="text" id="firstName" placeholder="Enter first name">
+                    <div class="error-message" id="firstNameError">Please enter a valid first name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName" class="required">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Enter last name">
+                    <div class="error-message" id="lastNameError">Please enter a valid last name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter email address">
+                    <div class="error-message" id="emailError">Please enter a valid email</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone" class="required">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter phone number">
+                    <div class="error-message" id="phoneError">Please enter a valid 10-digit phone number</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="required">Password</label>
+                    <input type="password" id="password" placeholder="Create password">
+                    <div class="error-message" id="passwordError">Password must be at least 8 characters</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword" class="required">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+                    <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country">
+                        <option value="">Select country</option>
+                        <option value="US">United States</option>
+                        <option value="IN">India</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" id="dateOfBirth">
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Gender</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="male" name="gender" value="male">
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="other" name="gender" value="other">
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Interests</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="coding" value="coding">
+                            <label for="coding">Coding</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="design" value="design">
+                            <label for="design">Design</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="music" value="music">
+                            <label for="music">Music</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="sports" value="sports">
+                            <label for="sports">Sports</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="bio">Bio/About</label>
+                    <textarea id="bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="terms" class="required">
+                        <label for="terms">I agree to the terms and conditions</label>
+                    </div>
+                    <div class="error-message" id="termsError">You must agree to the terms</div>
+                </div>
+                
+                <div class="form-footer">
+                    <button type="button" class="reset-btn" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Form
+                    </button>
+                </div>
+            </div>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <h3>Form Submitted Successfully!</h3>
+            <p>Your registration has been completed.</p>
+        </div>
+        
+        <div class="preview-section" id="previewSection">
+            <h3><i class="fas fa-eye"></i> Form Data Preview</h3>
+            <div class="preview-grid" id="previewGrid">
+                <!-- Preview will be added here -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>All fields marked with * are required</p>
+        </footer>
+    </div>
+</body>
+</html>
+
+        <!-- //Box change -->
+
+        <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Color Change</title>
+
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-palette"></i> Box Color Change</h1>
+            <p class="subtitle">Click boxes to change colors. Use controls to customize.</p>
+        </header>
+        
+        <div class="boxes-container">
+            <div class="box" id="box1" style="background: #3498db;">
+                <div class="box-label">Box 1</div>
+            </div>
+            <div class="box" id="box2" style="background: #2ecc71;">
+                <div class="box-label">Box 2</div>
+            </div>
+            <div class="box" id="box3" style="background: #e74c3c;">
+                <div class="box-label">Box 3</div>
+            </div>
+            <div class="box" id="box4" style="background: #f39c12;">
+                <div class="box-label">Box 4</div>
+            </div>
+            <div class="box" id="box5" style="background: #9b59b6;">
+                <div class="box-label">Box 5</div>
+            </div>
+            <div class="box" id="box6" style="background: #1abc9c;">
+                <div class="box-label">Box 6</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <h3><i class="fas fa-magic"></i> Change Mode</h3>
+                <div class="buttons-container">
+                    <button class="control-btn active" onclick="setMode('random')">
+                        <i class="fas fa-random"></i> Random Colors
+                    </button>
+                    <button class="control-btn" onclick="setMode('gradient')">
+                        <i class="fas fa-fill-drip"></i> Gradient Colors
+                    </button>
+                    <button class="control-btn" onclick="setMode('custom')">
+                        <i class="fas fa-edit"></i> Custom Color
+                    </button>
+                    <button class="control-btn" onclick="setMode('rainbow')">
+                        <i class="fas fa-rainbow"></i> Rainbow Cycle
+                    </button>
+                </div>
+            </div>
+            
+            <div class="control-group" id="customColorGroup" style="display: none;">
+                <h3><i class="fas fa-eyedropper"></i> Custom Color</h3>
+                <div class="color-inputs">
+                    <div class="color-input-group">
+                        <label>Primary Color</label>
+                        <div class="color-input">
+                            <input type="color" id="primaryColor" value="#3498db">
+                            <input type="text" id="primaryColorText" value="#3498db" placeholder="#000000">
+                        </div>
+                    </div>
+                    <div class="color-input-group">
+                        <label>Secondary Color</label>
+                        <div class="color-input">
+                            <input type="color" id="secondaryColor" value="#2ecc71">
+                            <input type="text" id="secondaryColorText" value="#2ecc71" placeholder="#000000">
+                        </div>
+                    </div>
+                </div>
+                <button class="control-btn" onclick="applyCustomColor()" style="margin-top: 15px;">
+                    <i class="fas fa-check"></i> Apply to All Boxes
+                </button>
+            </div>
+            
+            <div class="control-group">
+                <h3><i class="fas fa-sliders-h"></i> Actions</h3>
+                <div class="buttons-container">
+                    <button class="control-btn" onclick="changeAllRandom()">
+                        <i class="fas fa-sync"></i> Change All Random
+                    </button>
+                    <button class="control-btn" onclick="resetColors()">
+                        <i class="fas fa-undo"></i> Reset to Default
+                    </button>
+                    <button class="control-btn" onclick="copyColors()">
+                        <i class="fas fa-copy"></i> Copy Colors
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="clickCount">0</div>
+                <div class="stat-label">Total Clicks</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="colorChanges">0</div>
+                <div class="stat-label">Color Changes</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="uniqueColors">0</div>
+                <div class="stat-label">Unique Colors</div>
+            </div>
+        </div>
+        
+        <div class="history">
+            <h3><i class="fas fa-history"></i> Color History</h3>
+            <div class="history-items" id="colorHistory">
+                <!-- Color history will appear here -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>Click any box to change its color. Use the controls for advanced options.</p>
+        </footer>
+    </div>
+    </body>
+</html>
+        <!-- //color Box change -->
+            
+        <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Box Change - Color Picker</title>
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-fill-drip"></i> Color Box Change</h1>
+            <p class="subtitle">Real-time color picker with multiple color models</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="preview-section">
+                <div class="color-box" id="colorBox">
+                    <!-- Color box preview -->
+                </div>
+                
+                <div class="color-info">
+                    <h3><i class="fas fa-info-circle"></i> Color Information</h3>
+                    <div class="color-display">
+                        <div class="current-color" id="currentColorDisplay"></div>
+                        <div class="color-code" id="colorCode">#667eea</div>
+                    </div>
+                    
+                    <div class="color-value" id="rgbValue">RGB: 102, 126, 234</div>
+                    <div class="color-value" id="hslValue">HSL: 230°, 78%, 66%</div>
+                    <div class="color-value" id="hexValue">HEX: #667eea</div>
+                </div>
+            </div>
+            
+            <div class="controls-section">
+                <div class="control-group">
+                    <h3><i class="fas fa-eyedropper"></i> Color Picker</h3>
+                    <div class="color-picker-container">
+                        <input type="color" id="colorPicker" class="color-picker" value="#667eea">
+                        <div class="slider-container">
+                            <div class="slider-group">
+                                <label>
+                                    <span>Hue: <span class="slider-value" id="hueValue">230</span></span>
+                                </label>
+                                <input type="range" id="hueSlider" min="0" max="360" value="230">
+                            </div>
+                            <div class="slider-group">
+                                <label>
+                                    <span>Saturation: <span class="slider-value" id="saturationValue">78%</span></span>
+                                </label>
+                                <input type="range" id="saturationSlider" min="0" max="100" value="78">
+                            </div>
+                            <div class="slider-group">
+                                <label>
+                                    <span>Lightness: <span class="slider-value" id="lightnessValue">66%</span></span>
+                                </label>
+                                <input type="range" id="lightnessSlider" min="0" max="100" value="66">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="color-inputs">
+                        <div class="color-input-group">
+                            <label>HEX</label>
+                            <input type="text" id="hexInput" value="#667eea" placeholder="#000000">
+                        </div>
+                        <div class="color-input-group">
+                            <label>RGB</label>
+                            <input type="text" id="rgbInput" value="102, 126, 234" placeholder="0, 0, 0">
+                        </div>
+                        <div class="color-input-group">
+                            <label>HSL</label>
+                            <input type="text" id="hslInput" value="230, 78%, 66%" placeholder="0, 0%, 0%">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3><i class="fas fa-palette"></i> Preset Colors</h3>
+                    <div class="preset-colors">
+                        <div class="preset-color" style="background: #667eea;" onclick="setPresetColor('#667eea')"></div>
+                        <div class="preset-color" style="background: #2ecc71;" onclick="setPresetColor('#2ecc71')"></div>
+                        <div class="preset-color" style="background: #e74c3c;" onclick="setPresetColor('#e74c3c')"></div>
+                        <div class="preset-color" style="background: #f39c12;" onclick="setPresetColor('#f39c12')"></div>
+                        <div class="preset-color" style="background: #9b59b6;" onclick="setPresetColor('#9b59b6')"></div>
+                        <div class="preset-color" style="background: #1abc9c;" onclick="setPresetColor('#1abc9c')"></div>
+                        <div class="preset-color" style="background: #34495e;" onclick="setPresetColor('#34495e')"></div>
+                        <div class="preset-color" style="background: #e84393;" onclick="setPresetColor('#e84393')"></div>
+                        <div class="preset-color" style="background: #00cec9;" onclick="setPresetColor('#00cec9')"></div>
+                        <div class="preset-color" style="background: #fd79a8;" onclick="setPresetColor('#fd79a8')"></div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="copyColor()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button class="action-btn" onclick="randomColor()">
+                            <i class="fas fa-random"></i> Random
+                        </button>
+                        <button class="action-btn primary" onclick="applyColor()">
+                            <i class="fas fa-check"></i> Apply
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3><i class="fas fa-fill"></i> Gradient Mode</h3>
+                    <div class="gradient-control">
+                        <div class="color-picker-container">
+                            <label>Color 1</label>
+                            <input type="color" id="gradientColor1" value="#667eea" class="color-picker">
+                        </div>
+                        <div class="color-picker-container">
+                            <label>Color 2</label>
+                            <input type="color" id="gradientColor2" value="#764ba2" class="color-picker">
+                        </div>
+                    </div>
+                    
+                    <div class="gradient-options">
+                        <button class="gradient-btn active" onclick="setGradientType('linear')">Linear</button>
+                        <button class="gradient-btn" onclick="setGradientType('radial')">Radial</button>
+                        <button class="gradient-btn" onclick="setGradientType('conic')">Conic</button>
+                        <button class="gradient-btn" onclick="setGradientAngle(0)">0°</button>
+                        <button class="gradient-btn" onclick="setGradientAngle(45)">45°</button>
+                        <button class="gradient-btn" onclick="setGradientAngle(90)">90°</button>
+                        <button class="gradient-btn" onclick="setGradientAngle(180)">180°</button>
+                    </div>
+                    
+                    <button class="action-btn" onclick="applyGradient()" style="margin-top: 15px; width: 100%;">
+                        <i class="fas fa-fill"></i> Apply Gradient
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Select colors using any method - color picker, sliders, or direct input</p>
+        </footer>
+    </div>
+
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⏰ All-in-One Clock App</h1>
+            <div class="main-clock" id="mainClock">00:00:00</div>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="alarm">Alarm Clock</button>
+            <button class="tab-btn" data-tab="worldclock">World Clock</button>
+            <button class="tab-btn" data-tab="stopwatch">Stopwatch</button>
+            <button class="tab-btn" data-tab="timer">Timer</button>
+        </div>
+        
+        <div class="features-container">
+            <!-- Alarm Clock Feature -->
+            <div class="feature active" id="alarm">
+                <h2>⏰ Set Alarm</h2>
+                <div class="controls">
+                    <input type="time" id="alarmTime">
+                    <input type="text" id="alarmLabel" placeholder="Alarm Label (optional)">
+                    <select id="alarmSound">
+                        <option value="beep">Beep Sound</option>
+                        <option value="bell">Bell Sound</option>
+                        <option value="chime">Chime Sound</option>
+                        <option value="digital">Digital Beep</option>
+                    </select>
+                    <button class="primary" onclick="setAlarm()">Set Alarm</button>
+                </div>
+                
+                <div class="alarm-list" id="alarmList">
+                    <!-- Alarms will appear here -->
+                </div>
+            </div>
+
+              <div class="feature" id="worldclock">
+                <h2>🌍 World Clock</h2>
+                <div class="controls">
+                    <select id="timezoneSelect">
+                        <option value="local">Local Time</option>
+                        <option value="America/New_York">New York (EST)</option>
+                        <option value="Europe/London">London (GMT)</option>
+                        <option value="Europe/Paris">Paris (CET)</option>
+                        <option value="Asia/Tokyo">Tokyo (JST)</option>
+                        <option value="Asia/Dubai">Dubai (GST)</option>
+                        <option value="Australia/Sydney">Sydney (AEST)</option>
+                        <option value="Asia/Kolkata">Mumbai (IST)</option>
+                        <option value="Asia/Shanghai">Shanghai (CST)</option>
+                    </select>
+                    <button class="info" onclick="addTimezone()">Add Timezone</button>
+                </div>
+                
+                <div class="world-clock-grid" id="worldClockGrid">
+                    <!-- Timezone cards will appear here -->
+                </div>
+            </div>
+            
+            <!-- Stopwatch Feature -->
+            <div class="feature" id="stopwatch">
+                <h2>⏱️ Stopwatch</h2>
+                <div class="display" id="stopwatchDisplay">00:00:00.00</div>
+                <div class="controls">
+                    <button class="primary" onclick="startStopwatch()" id="stopwatchStart">Start</button>
+                    <button class="warning" onclick="pauseStopwatch()" id="stopwatchPause" disabled>Pause</button>
+                    <button class="secondary" onclick="resetStopwatch()">Reset</button>
+                    <button class="info" onclick="lapStopwatch()">Lap</button>
+                </div>
+                <div class="alarm-list" id="stopwatchLaps">
+                    <!-- Lap times will appear here -->
+                </div>
+            </div>
+            
+            <!-- Timer Feature -->
+            <div class="feature" id="timer">
+                <h2>⏳ Timer</h2>
+                <div class="display" id="timerDisplay">25:00</div>
+                <div class="controls">
+                    <input type="number" id="timerMinutes" min="1" max="180" value="25" placeholder="Minutes">
+                    <input type="number" id="timerSeconds" min="0" max="59" value="0" placeholder="Seconds">
+                    <button class="primary" onclick="startTimer()" id="timerStart">Start</button>
+                    <button class="warning" onclick="pauseTimer()" id="timerPause" disabled>Pause</button>
+                    <button class="secondary" onclick="resetTimer()">Reset</button>
+                </div>
+                <div class="controls">
+                    <button onclick="setPresetTimer(1)">1 min</button>
+                    <button onclick="setPresetTimer(5)">5 min</button>
+                    <button onclick="setPresetTimer(10)">10 min</button>
+                    <button onclick="setPresetTimer(45)">15 min</button>
+                    <button onclick="setPresetTimer(30)">30 min</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>All-in-One Clock App | Made with ❤️ | All features working</p>
+        </footer>
+    </div>
+
+    <!-- Alarm Sound Elements -->
+    <audio id="alarmAudio" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="timerAudio" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-show-wrong-answer-buzz-950.mp3" type="audio/mpeg">
+    </audio>
+
+            <!-- //Box swap -->
+
+            <body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-arrows-alt"></i> Box Swap</h1>
+            <p class="subtitle">Select and swap boxes with smooth animations</p>
+        </header>
+        
+        <div class="swap-area" id="swapArea">
+            <!-- Boxes will be generated here -->
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> How to Swap</h3>
+            <ol>
+                <li>Click on a box to select it (turns red)</li>
+                <li>Click on another box to swap their positions</li>
+                <li>Use control buttons for advanced operations</li>
+                <li>Drag and drop also supported!</li>
+            </ol>
+        </div>
+        
+        <div class="controls">
+            <div class="control-buttons">
+                <button class="control-btn primary" onclick="swapSelected()" id="swapBtn" disabled>
+                    <i class="fas fa-exchange-alt"></i> Swap Selected
+                </button>
+                <button class="control-btn" onclick="resetPositions()">
+                    <i class="fas fa-undo"></i> Reset Positions
+                </button>
+                <button class="control-btn secondary" onclick="shuffleBoxes()">
+                    <i class="fas fa-random"></i> Shuffle All
+                </button>
+                <button class="control-btn" onclick="undoSwap()" id="undoBtn" disabled>
+                    <i class="fas fa-undo-alt"></i> Undo
+                </button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="swapCount">0</div>
+                <div class="stat-label">Total Swaps</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="selectedCount">0</div>
+                <div class="stat-label">Selected Boxes</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="correctCount">0</div>
+                <div class="stat-label">Correct Order</div>
+            </div>
+        </div>
+        
+        <div class="swap-history">
+            <h4><i class="fas fa-history"></i> Swap History</h4>
+            <div id="historyList">
+                <!-- History items will appear here -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>Drag boxes to swap or use click selection method</p>
+        </footer>
+    </div>
+
+   
+</body>
+
+        <!-- //Box swap PRO -->
+
+         <div class="container">
+        <header>
+            <h1><i class="fas fa-shuffle"></i> Box Swap Pro</h1>
+            <p class="subtitle">Advanced box swapping with multiple patterns and modes</p>
+        </header>
+        
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-number" id="movesCount">0</div>
+                <div class="stat-label">Moves</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="timeCount">00:00</div>
+                <div class="stat-label">Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="accuracyRate">100%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+        
+        <div class="main-layout">
+            <div class="swap-area" id="swapArea">
+                <!-- 4x4 grid of boxes -->
+            </div>
+            
+            <div class="controls-panel">
+                <div class="panel-section">
+                    <h3><i class="fas fa-gamepad"></i> Game Mode</h3>
+                    <div class="mode-selector">
+                        <button class="mode-btn active" onclick="setMode('drag')">
+                            <i class="fas fa-arrows-alt"></i> Drag & Drop
+                        </button>
+                        <button class="mode-btn" onclick="setMode('click')">
+                            <i class="fas fa-mouse-pointer"></i> Click to Swap
+                        </button>
+                        <button class="mode-btn" onclick="setMode('auto')">
+                            <i class="fas fa-robot"></i> Auto Solve
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h3><i class="fas fa-th-large"></i> Pattern</h3>
+                    <div class="pattern-buttons">
+                        <button class="pattern-btn active" onclick="setPattern('normal')">1</button>
+                        <button class="pattern-btn" onclick="setPattern('checker')">2</button>
+                        <button class="pattern-btn" onclick="setPattern('spiral')">3</button>
+                        <button class="pattern-btn" onclick="setPattern('diagonal')">4</button>
+                        <button class="pattern-btn" onclick="setPattern('random')">5</button>
+                        <button class="pattern-btn" onclick="setPattern('custom')">6</button>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h3><i class="fas fa-sliders-h"></i> Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="shuffleBoxes()">
+                            <i class="fas fa-random"></i> Shuffle
+                        </button>
+                        <button class="action-btn success" onclick="solvePuzzle()">
+                            <i class="fas fa-check"></i> Solve
+                        </button>
+                        <button class="action-btn secondary" onclick="resetGame()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="action-btn warning" onclick="hint()">
+                            <i class="fas fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h3><i class="fas fa-cog"></i> Settings</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label style="display: flex; justify-content: space-between;">
+                            <span>Grid Size:</span>
+                            <select id="gridSize" onchange="changeGridSize()">
+                                <option value="3">3x3</option>
+                                <option value="4" selected>4x4</option>
+                                <option value="5">5x5</option>
+                                <option value="6">6x6</option>
+                            </select>
+                        </label>
+                        <label style="display: flex; justify-content: space-between;">
+                            <span>Animation Speed:</span>
+                            <select id="animationSpeed" onchange="changeAnimationSpeed()">
+                                <option value="slow">Slow</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="fast">Fast</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="history-panel">
+            <h4><i class="fas fa-history"></i> Move History</h4>
+            <div id="historyList">
+                <!-- Move history will appear here -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>Drag boxes or click to swap. Try different patterns and challenge yourself!</p>
+        </footer>
+    </div>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+          <script src="index.js"> </script>

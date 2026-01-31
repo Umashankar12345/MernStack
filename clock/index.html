@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock App - All in One</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .main-clock {
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .feature.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .feature h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #fff;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+        
+        .display {
+            font-size: 2.5rem;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            letter-spacing: 2px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+        
+        button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        button.primary {
+            background: #4CAF50;
+        }
+        
+        button.secondary {
+            background: #f44336;
+        }
+        
+        button.warning {
+            background: #ff9800;
+        }
+        
+        button.info {
+            background: #2196F3;
+        }
+        
+        input, select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin: 5px;
+            background: rgba(255,255,255,0.9);
+            width: 100%;
+            max-width: 200px;
+        }
+        
+        .alarm-list, .timezone-list {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .alarm-item, .timezone-item {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .delete-btn {
+            background: #f44336;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        
+        .world-clock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .timezone-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .timezone-name {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .timezone-time {
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-clock {
+                font-size: 3rem;
+            }
+            
+            .display {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⏰ All-in-One Clock App</h1>
+            <div class="main-clock" id="mainClock">00:00:00</div>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="alarm">Alarm Clock</button>
+            <button class="tab-btn" data-tab="worldclock">World Clock</button>
+            <button class="tab-btn" data-tab="stopwatch">Stopwatch</button>
+            <button class="tab-btn" data-tab="timer">Timer</button>
+        </div>
+        
+        <div class="features-container">
+            <!-- Alarm Clock Feature -->
+            <div class="feature active" id="alarm">
+                <h2>⏰ Set Alarm</h2>
+                <div class="controls">
+                    <input type="time" id="alarmTime">
+                    <input type="text" id="alarmLabel" placeholder="Alarm Label (optional)">
+                    <select id="alarmSound">
+                        <option value="beep">Beep Sound</option>
+                        <option value="bell">Bell Sound</option>
+                        <option value="chime">Chime Sound</option>
+                        <option value="digital">Digital Beep</option>
+                    </select>
+                    <button class="primary" onclick="setAlarm()">Set Alarm</button>
+                </div>
+                
+                <div class="alarm-list" id="alarmList">
+                    <!-- Alarms will appear here -->
+                </div>
+            </div>
+            
+            <!-- World Clock Feature -->
+            <div class="feature" id="worldclock">
+                <h2>🌍 World Clock</h2>
+                <div class="controls">
+                    <select id="timezoneSelect">
+                        <option value="local">Local Time</option>
+                        <option value="America/New_York">New York (EST)</option>
+                        <option value="Europe/London">London (GMT)</option>
+                        <option value="Europe/Paris">Paris (CET)</option>
+                        <option value="Asia/Tokyo">Tokyo (JST)</option>
+                        <option value="Asia/Dubai">Dubai (GST)</option>
+                        <option value="Australia/Sydney">Sydney (AEST)</option>
+                        <option value="Asia/Kolkata">Mumbai (IST)</option>
+                        <option value="Asia/Shanghai">Shanghai (CST)</option>
+                    </select>
+                    <button class="info" onclick="addTimezone()">Add Timezone</button>
+                </div>
+                
+                <div class="world-clock-grid" id="worldClockGrid">
+                    <!-- Timezone cards will appear here -->
+                </div>
+            </div>
+            
+            <!-- Stopwatch Feature -->
+            <div class="feature" id="stopwatch">
+                <h2>⏱️ Stopwatch</h2>
+                <div class="display" id="stopwatchDisplay">00:00:00.00</div>
+                <div class="controls">
+                    <button class="primary" onclick="startStopwatch()" id="stopwatchStart">Start</button>
+                    <button class="warning" onclick="pauseStopwatch()" id="stopwatchPause" disabled>Pause</button>
+                    <button class="secondary" onclick="resetStopwatch()">Reset</button>
+                    <button class="info" onclick="lapStopwatch()">Lap</button>
+                </div>
+                <div class="alarm-list" id="stopwatchLaps">
+                    <!-- Lap times will appear here -->
+                </div>
+            </div>
+            
+            <!-- Timer Feature -->
+            <div class="feature" id="timer">
+                <h2>⏳ Timer</h2>
+                <div class="display" id="timerDisplay">25:00</div>
+                <div class="controls">
+                    <input type="number" id="timerMinutes" min="1" max="180" value="25" placeholder="Minutes">
+                    <input type="number" id="timerSeconds" min="0" max="59" value="0" placeholder="Seconds">
+                    <button class="primary" onclick="startTimer()" id="timerStart">Start</button>
+                    <button class="warning" onclick="pauseTimer()" id="timerPause" disabled>Pause</button>
+                    <button class="secondary" onclick="resetTimer()">Reset</button>
+                </div>
+                <div class="controls">
+                    <button onclick="setPresetTimer(1)">1 min</button>
+                    <button onclick="setPresetTimer(5)">5 min</button>
+                    <button onclick="setPresetTimer(10)">10 min</button>
+                    <button onclick="setPresetTimer(15)">15 min</button>
+                    <button onclick="setPresetTimer(30)">30 min</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>All-in-One Clock App | Made with ❤️ | All features working</p>
+        </footer>
+    </div>
+
+    <!-- Alarm Sound Elements -->
+    <audio id="alarmAudio" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="timerAudio" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-show-wrong-answer-buzz-950.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // ========== MAIN CLOCK ==========
+        function updateMainClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('mainClock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        
+        setInterval(updateMainClock, 1000);
+        updateMainClock();
+
+        // ========== TAB SWITCHING ==========
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and features
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.feature').forEach(feature => feature.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding feature
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // ========== ALARM CLOCK ==========
+        let alarms = [];
+        let alarmInterval;
+        
+        function setAlarm() {
+            const timeInput = document.getElementById('alarmTime').value;
+            const labelInput = document.getElementById('alarmLabel').value || 'Alarm';
+            const soundInput = document.getElementById('alarmSound').value;
+            
+            if (!timeInput) {
+                alert('Please select a time for the alarm!');
+                return;
+            }
+            
+            const alarm = {
+                id: Date.now(),
+                time: timeInput,
+                label: labelInput,
+                sound: soundInput,
+                active: true
+            };
+            
+            alarms.push(alarm);
+            updateAlarmList();
+            checkAlarms();
+            
+            // Clear inputs
+            document.getElementById('alarmTime').value = '';
+            document.getElementById('alarmLabel').value = '';
+            
+            alert(`Alarm set for ${timeInput} (${labelInput})`);
+        }
+        
+        function updateAlarmList() {
+            const alarmList = document.getElementById('alarmList');
+            alarmList.innerHTML = '';
+            
+            alarms.forEach(alarm => {
+                const alarmItem = document.createElement('div');
+                alarmItem.className = 'alarm-item';
+                alarmItem.innerHTML = `
+                    <div>
+                        <strong>${alarm.time}</strong> - ${alarm.label}
+                        <br><small>Sound: ${alarm.sound}</small>
+                    </div>
+                    <div>
+                        <button class="delete-btn" onclick="deleteAlarm(${alarm.id})">Delete</button>
+                        <button onclick="toggleAlarm(${alarm.id})" style="background: ${alarm.active ? '#4CAF50' : '#888'}">
+                            ${alarm.active ? 'ON' : 'OFF'}
+                        </button>
+                    </div>
+                `;
+                alarmList.appendChild(alarmItem);
+            });
+        }
+        
+        function deleteAlarm(id) {
+            alarms = alarms.filter(alarm => alarm.id !== id);
+            updateAlarmList();
+        }
+        
+        function toggleAlarm(id) {
+            alarms = alarms.map(alarm => {
+                if (alarm.id === id) {
+                    return { ...alarm, active: !alarm.active };
+                }
+                return alarm;
+            });
+            updateAlarmList();
+        }
+        
+        function checkAlarms() {
+            if (alarmInterval) clearInterval(alarmInterval);
+            
+            alarmInterval = setInterval(() => {
+                const now = new Date();
+                const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                alarms.forEach(alarm => {
+                    if (alarm.active && alarm.time === currentTime) {
+                        triggerAlarm(alarm);
+                    }
+                });
+            }, 60000); // Check every minute
+        }
+        
+        function triggerAlarm(alarm) {
+            // Play sound
+            const audio = document.getElementById('alarmAudio');
+            audio.play();
+            
+            // Show notification
+            if (Notification.permission === "granted") {
+                new Notification(`⏰ Alarm: ${alarm.label}`, {
+                    body: `It's ${alarm.time}! Time to wake up!`,
+                    icon: 'https://cdn-icons-png.flaticon.com/512/3208/3208720.png'
+                });
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        new Notification(`⏰ Alarm: ${alarm.label}`, {
+                            body: `It's ${alarm.time}! Time to wake up!`
+                        });
+                    }
+                });
+            }
+            
+            // Show alert
+            alert(`⏰ ALARM: ${alarm.label}\nTime: ${alarm.time}`);
+            
+            // Deactivate alarm after triggering
+            toggleAlarm(alarm.id);
+        }
+        
+        // Request notification permission
+        if (Notification.permission === "default") {
+            Notification.requestPermission();
+        }
+
+        // ========== WORLD CLOCK ==========
+        let timezones = ['local'];
+        
+        function addTimezone() {
+            const select = document.getElementById('timezoneSelect');
+            const timezone = select.value;
+            
+            if (!timezones.includes(timezone)) {
+                timezones.push(timezone);
+                updateWorldClock();
+            }
+        }
+        
+        function updateWorldClock() {
+            const grid = document.getElementById('worldClockGrid');
+            grid.innerHTML = '';
+            
+            timezones.forEach(timezone => {
+                const card = document.createElement('div');
+                card.className = 'timezone-card';
+                
+                let time;
+                let name;
+                
+                if (timezone === 'local') {
+                    const now = new Date();
+                    time = now.toLocaleTimeString('en-US', { hour12: false });
+                    name = 'Local Time';
+                } else {
+                    const now = new Date();
+                    time = now.toLocaleTimeString('en-US', { 
+                        timeZone: timezone,
+                        hour12: false 
+                    });
+                    name = timezone.split('/')[1].replace('_', ' ');
+                }
+                
+                card.innerHTML = `
+                    <div class="timezone-name">${name}</div>
+                    <div class="timezone-time">${time}</div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Update world clock every second
+        setInterval(updateWorldClock, 1000);
+        updateWorldClock();
+
+        // ========== STOPWATCH ==========
+        let stopwatch = {
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            milliseconds: 0,
+            timer: null,
+            isRunning: false,
+            laps: []
+        };
+        
+        function startStopwatch() {
+            if (!stopwatch.isRunning) {
+                stopwatch.isRunning = true;
+                document.getElementById('stopwatchStart').disabled = true;
+                document.getElementById('stopwatchPause').disabled = false;
+                
+                stopwatch.timer = setInterval(() => {
+                    stopwatch.milliseconds += 10;
+                    
+                    if (stopwatch.milliseconds >= 1000) {
+                        stopwatch.seconds++;
+                        stopwatch.milliseconds = 0;
+                    }
+                    
+                    if (stopwatch.seconds >= 60) {
+                        stopwatch.minutes++;
+                        stopwatch.seconds = 0;
+                    }
+                    
+                    if (stopwatch.minutes >= 60) {
+                        stopwatch.hours++;
+                        stopwatch.minutes = 0;
+                    }
+                    
+                    updateStopwatchDisplay();
+                }, 10);
+            }
+        }
+        
+        function pauseStopwatch() {
+            if (stopwatch.isRunning) {
+                stopwatch.isRunning = false;
+                document.getElementById('stopwatchStart').disabled = false;
+                document.getElementById('stopwatchPause').disabled = true;
+                clearInterval(stopwatch.timer);
+            }
+        }
+        
+        function resetStopwatch() {
+            pauseStopwatch();
+            stopwatch.hours = 0;
+            stopwatch.minutes = 0;
+            stopwatch.seconds = 0;
+            stopwatch.milliseconds = 0;
+            stopwatch.laps = [];
+            updateStopwatchDisplay();
+            document.getElementById('stopwatchLaps').innerHTML = '';
+        }
+        
+        function lapStopwatch() {
+            if (stopwatch.isRunning) {
+                const lapTime = document.getElementById('stopwatchDisplay').textContent;
+                const lapCount = stopwatch.laps.length + 1;
+                stopwatch.laps.push({ number: lapCount, time: lapTime });
+                
+                const lapItem = document.createElement('div');
+                lapItem.className = 'alarm-item';
+                lapItem.innerHTML = `Lap ${lapCount}: ${lapTime}`;
+                document.getElementById('stopwatchLaps').prepend(lapItem);
+            }
+        }
+        
+        function updateStopwatchDisplay() {
+            const hours = stopwatch.hours.toString().padStart(2, '0');
+            const minutes = stopwatch.minutes.toString().padStart(2, '0');
+            const seconds = stopwatch.seconds.toString().padStart(2, '0');
+            const milliseconds = Math.floor(stopwatch.milliseconds / 10).toString().padStart(2, '0');
+            
+            document.getElementById('stopwatchDisplay').textContent = 
+                `${hours}:${minutes}:${seconds}.${milliseconds}`;
+        }
+
+        // ========== TIMER ==========
+        let timer = {
+            totalSeconds: 1500, // 25 minutes default
+            remainingSeconds: 1500,
+            timer: null,
+            isRunning: false
+        };
+        
+        function startTimer() {
+            if (!timer.isRunning && timer.remainingSeconds > 0) {
+                timer.isRunning = true;
+                document.getElementById('timerStart').disabled = true;
+                document.getElementById('timerPause').disabled = false;
+                
+                timer.timer = setInterval(() => {
+                    timer.remainingSeconds--;
+                    updateTimerDisplay();
+                    
+                    if (timer.remainingSeconds <= 0) {
+                        timerFinished();
+                    }
+                }, 1000);
+            }
+        }
+        
+        function pauseTimer() {
+            if (timer.isRunning) {
+                timer.isRunning = false;
+                document.getElementById('timerStart').disabled = false;
+                document.getElementById('timerPause').disabled = true;
+                clearInterval(timer.timer);
+            }
+        }
+        
+        function resetTimer() {
+            pauseTimer();
+            const minutes = parseInt(document.getElementById('timerMinutes').value) || 25;
+            const seconds = parseInt(document.getElementById('timerSeconds').value) || 0;
+            timer.totalSeconds = timer.remainingSeconds = (minutes * 60) + seconds;
+            updateTimerDisplay();
+        }
+        
+        function setPresetTimer(minutes) {
+            document.getElementById('timerMinutes').value = minutes;
+            document.getElementById('timerSeconds').value = 0;
+            resetTimer();
+        }
+        
+        function timerFinished() {
+            pauseTimer();
+            
+            // Play sound
+            const audio = document.getElementById('timerAudio');
+            audio.play();
+            
+            // Show notification
+            if (Notification.permission === "granted") {
+                new Notification("⏰ Timer Finished!", {
+                    body: "Your timer has completed!",
+                    icon: 'https://cdn-icons-png.flaticon.com/512/3208/3208720.png'
+                });
+            }
+            
+            alert("⏰ Timer Finished!");
+            
+            // Flash animation
+            const display = document.getElementById('timerDisplay');
+            display.style.color = '#ff0000';
+            setTimeout(() => display.style.color = 'white', 500);
+            setTimeout(() => display.style.color = '#ff0000', 1000);
+            setTimeout(() => display.style.color = 'white', 1500);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timer.remainingSeconds / 60);
+            const seconds = timer.remainingSeconds % 60;
+            
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Initialize timer display
+        resetTimer();
+
+        // ========== INITIALIZE ==========
+        updateAlarmList();
+        checkAlarms();
+    </script>
+</body>
+</html>
