@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch Timer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="Stopwatch.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-stopwatch"></i> Advanced Stopwatch</h1>
+            <p class="subtitle">Precision timer with lap tracking and multiple features</p>
+        </header>
+
+        <div class="stopwatch-container">
+            <div class="display-container">
+                <div class="time-display" id="display">
+                    <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+                    <span class="milliseconds">.<span id="milliseconds">00</span></span>
+                </div>
+                
+                <div class="time-units">
+                    <span>HOURS</span>
+                    <span>MINUTES</span>
+                    <span>SECONDS</span>
+                    <span>MILLISECONDS</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="control-btn start" id="startBtn">
+                    <i class="fas fa-play"></i> Start
+                </button>
+                <button class="control-btn pause" id="pauseBtn" disabled>
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+                <button class="control-btn lap" id="lapBtn" disabled>
+                    <i class="fas fa-flag"></i> Lap
+                </button>
+                <button class="control-btn reset" id="resetBtn">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="lapCount">0</div>
+                    <div class="stat-label">Laps</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="totalTime">00:00:00</div>
+                    <div class="stat-label">Total Time</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="fastestLap">--:--.--</div>
+                    <div class="stat-label">Fastest Lap</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="slowestLap">--:--.--</div>
+                    <div class="stat-label">Slowest Lap</div>
+                </div>
+            </div>
+
+            <div class="laps-container">
+                <h3><i class="fas fa-list-ol"></i> Lap Times</h3>
+                <div class="laps-list" id="lapsList">
+                    <div class="no-laps">
+                        <i class="fas fa-flag-checkered"></i>
+                        <p>No lap times recorded yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings">
+                <h3><i class="fas fa-cog"></i> Settings</h3>
+                <div class="settings-options">
+                    <div class="option">
+                        <label>
+                            <input type="checkbox" id="soundToggle" checked>
+                            <span class="option-label">Enable sounds</span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            <input type="checkbox" id="autoLapToggle">
+                            <span class="option-label">Auto-lap every 60s</span>
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            <span class="option-label">Theme:</span>
+                            <select id="themeSelect">
+                                <option value="light">Light</option>
+                                <option value="dark" selected>Dark</option>
+                                <option value="blue">Blue</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><i class="fas fa-info-circle"></i> Stopwatch with precision timing up to milliseconds</p>
+            <p class="shortcuts">Keyboard Shortcuts: Space (Start/Pause), L (Lap), R (Reset)</p>
+        </footer>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="startSound" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" preload="auto"></audio>
+    <audio id="lapSound" src="https://assets.mixkit.co/sfx/preview/mixkit-retro-game-emergency-alarm-1000.mp3" preload="auto"></audio>
+    <audio id="resetSound" src="https://assets.mixkit.co/sfx/preview/mixkit-plastic-bubble-click-1124.mp3" preload="auto"></audio>
+
+    <script src="Stopwatch.js"></script>
+</body>
+</html>

@@ -39,28 +39,94 @@
 
 
 
-import Header from "./component/Header";
+// import Header from "./component/Header";
 
-import Footer from "./component/Footer";
-import Sidebar from "./component/sidebar";
-function App() {
-  return (
-    <div className="app">
-      <Header />
+// import Footer from "./component/Footer";
+// import Sidebar from "./component/sidebar";
+// import FormPage from "./component/Form";
+// function App() {
+//   return (
+//     <div className="app">
+//       <Header />
 
-      <div className="layout">
-        <Sidebar />
-        <div className="content">
-          <h2>Dashboard Content</h2>
-          <p>Welcome to the dashboard</p>
-        </div>
-      </div>
+//       <div className="layout">
+//         <Sidebar />
+//         <div className="content">
+//           <h2>Dashboard Content</h2>
+//           <p>Welcome to the dashboard</p>
+//         </div>
+//       </div>
 
-      <Footer />
-      <Sidebar/>
+//       <Footer />
+//     <FormPage/>
     
-    </div>
-  );
-}
+//     </div>
+//   );
+// }
 
-export default App;
+// export default App;
+
+
+// import { useState } from "react";
+// import Header from "./component/Header";
+// import Footer from "./component/Footer";
+// import Sidebar from "./component/sidebar";
+// import FormPage from "./component/Form";
+// import "./App.css"; // Make sure to create this CSS file
+
+// function App() {
+//   const [page, setPage] = useState("dashboard"); // Added state for page management
+
+//   const renderPage = () => {
+//     switch (page) {
+//       case "form":
+//         return <FormPage />;
+//       case "about":
+//         return (
+//           <div className="content">
+//             <h2>About Page</h2>
+//             <p>This is the about page content.</p>
+//           </div>
+//         );
+//       case "dashboard":
+//       default:
+//         return (
+//           <div className="content">
+//             <h2>Dashboard Content</h2>
+//             <p>Welcome to the dashboard</p>
+//           </div>
+//         );
+//     }
+//   };
+
+//   return (
+//     <div className="app">
+//       <Header />
+
+//       <div className="layout">
+//         <Sidebar setPage={setPage} /> {/* Pass setPage as prop */}
+//         <div className="main-content">
+//           {renderPage()}
+//         </div>
+//       </div>
+
+//       <Footer />
+//       <Sidebar/>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+// import React from 'react'
+// import FlipCoin from './component/FlipCoin'
+// function App() {
+//   return (
+//     <div>
+//       <FlipCoin />
+//     </div>
+//   )
+// }
+
+// export default App

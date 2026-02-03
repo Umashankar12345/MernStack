@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Calculator</title>
+    <link rel="stylesheet" href="Calculatorpower.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> Power Calculator</h1>
+            <p class="subtitle">Advanced calculator with scientific functions and memory</p>
+        </header>
+        
+        <div class="calculator">
+            <div class="input-section">
+                <div class="display">
+                    <div class="calculation" id="calculation">0</div>
+                    <div class="result" id="result">0</div>
+                </div>
+                
+                <div class="memory-buttons">
+                    <button class="memory-btn" onclick="memoryClear()">MC</button>
+                    <button class="memory-btn" onclick="memoryRecall()">MR</button>
+                    <button class="memory-btn" onclick="memoryAdd()">M+</button>
+                    <button class="memory-btn" onclick="memorySubtract()">M-</button>
+                </div>
+                
+                <div class="memory-display" id="memoryDisplay">
+                    Memory: 0
+                </div>
+                
+                <div class="buttons-grid">
+                    <button class="calc-btn clear" onclick="clearAll()">C</button>
+                    <button class="calc-btn clear" onclick="clearEntry()">CE</button>
+                    <button class="calc-btn function" onclick="backspace()">⌫</button>
+                    <button class="calc-btn operator" onclick="appendOperator('/')">÷</button>
+                    
+                    <button class="calc-btn number" onclick="appendNumber(7)">7</button>
+                    <button class="calc-btn number" onclick="appendNumber(8)">8</button>
+                    <button class="calc-btn number" onclick="appendNumber(9)">9</button>
+                    <button class="calc-btn operator" onclick="appendOperator('*')">×</button>
+                    
+                    <button class="calc-btn number" onclick="appendNumber(4)">4</button>
+                    <button class="calc-btn number" onclick="appendNumber(5)">5</button>
+                    <button class="calc-btn number" onclick="appendNumber(6)">6</button>
+                    <button class="calc-btn operator" onclick="appendOperator('-')">-</button>
+                    
+                    <button class="calc-btn number" onclick="appendNumber(1)">1</button>
+                    <button class="calc-btn number" onclick="appendNumber(2)">2</button>
+                    <button class="calc-btn number" onclick="appendNumber(3)">3</button>
+                    <button class="calc-btn operator" onclick="appendOperator('+')">+</button>
+                    
+                    <button class="calc-btn number" onclick="toggleSign()">±</button>
+                    <button class="calc-btn number" onclick="appendNumber(0)">0</button>
+                    <button class="calc-btn number" onclick="appendDecimal()">.</button>
+                    <button class="calc-btn equals" onclick="calculate()">=</button>
+                </div>
+                
+                <div class="scientific-section">
+                    <h4><i class="fas fa-flask"></i> Scientific Functions</h4>
+                    <div class="scientific-buttons">
+                        <button class="sci-btn" onclick="calculateFunction('sqrt')">√</button>
+                        <button class="sci-btn" onclick="calculateFunction('square')">x²</button>
+                        <button class="sci-btn" onclick="calculateFunction('power')">xʸ</button>
+                        <button class="sci-btn" onclick="calculateFunction('percent')">%</button>
+                        
+                        <button class="sci-btn" onclick="calculateFunction('sin')">sin</button>
+                        <button class="sci-btn" onclick="calculateFunction('cos')">cos</button>
+                        <button class="sci-btn" onclick="calculateFunction('tan')">tan</button>
+                        <button class="sci-btn" onclick="calculateFunction('log')">log</button>
+                        
+                        <button class="sci-btn" onclick="calculateFunction('ln')">ln</button>
+                        <button class="sci-btn" onclick="calculateFunction('exp')">eˣ</button>
+                        <button class="sci-btn" onclick="calculateFunction('pi')">π</button>
+                        <button class="sci-btn" onclick="calculateFunction('factorial')">x!</button>
+                        
+                        <button class="sci-btn" onclick="calculateFunction('sinh')">sinh</button>
+                        <button class="sci-btn" onclick="calculateFunction('cosh')">cosh</button>
+                        <button class="sci-btn" onclick="calculateFunction('tanh')">tanh</button>
+                        <button class="sci-btn" onclick="calculateFunction('reciprocal')">1/x</button>
+                    </div>
+                </div>
+                
+                <div class="converter-section">
+                    <h4><i class="fas fa-exchange-alt"></i> Unit Converter</h4>
+                    <div class="converter-inputs">
+                        <input type="number" id="converterInput" placeholder="Enter value">
+                        <select id="converterFrom">
+                            <option value="cm">Centimeters</option>
+                            <option value="m">Meters</option>
+                            <option value="km">Kilometers</option>
+                            <option value="in">Inches</option>
+                            <option value="ft">Feet</option>
+                            <option value="mi">Miles</option>
+                        </select>
+                        <span>to</span>
+                        <select id="converterTo">
+                            <option value="m">Meters</option>
+                            <option value="cm">Centimeters</option>
+                            <option value="km">Kilometers</option>
+                            <option value="in">Inches</option>
+                            <option value="ft">Feet</option>
+                            <option value="mi">Miles</option>
+                        </select>
+                    </div>
+                    <div class="converter-result" id="converterResult">
+                        Result: 0
+                    </div>
+                    <button class="calc-btn" onclick="convertUnits()" style="width: 100%; margin-top: 10px;">Convert</button>
+                </div>
+            </div>
+            
+            <div class="history-section">
+                <h3><i class="fas fa-history"></i> Calculation History</h3>
+                <div class="history-list" id="historyList">
+                    <!-- History items will appear here -->
+                </div>
+                <button class="calc-btn" onclick="clearHistory()" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Use scientific functions for advanced calculations. All calculations are stored in history.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="Calculatorpower.js"></script>
+</body>
+</html>

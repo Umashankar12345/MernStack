@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking System</title>
+    <link rel="stylesheet" href="Banking.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Banking System</h1>
+        <p>Balance: $<span id="balance">1000</span></p>
+        
+        <div class="controls">
+            <input type="number" id="amount" placeholder="Enter amount">
+            <button onclick="deposit()">Deposit</button>
+            <button onclick="withdraw()">Withdraw</button>
+        </div>
+        
+        <div id="history"></div>
+    </div>
+    
+    <script src="Banking.js"></script>
+</body>
+</html>

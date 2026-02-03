@@ -2029,3 +2029,1080 @@ function calculateBMI() {
             const accuracy = totalBoxes > 0 ? Math.round((correctBoxes / totalBoxes) * 100) : 100;
             document.getElementById('accuracyRate').textContent = `${accuracy}%`;
         }
+
+
+        //box color swap
+
+
+           // State
+        let selectedBox = null;
+        let swapCount = 0;
+        let uniqueColors = new Set(['#FF6B6B', '#4ECDC4']);
+        let swapHistory = [];
+        
+        // Predefined color palette
+        const paletteColors = [
+            '#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2',
+            '#7209B7', '#F72585', '#3A0CA3', '#4361EE', '#4CC9F0',
+            '#FF9E00', '#FF0054', '#00FFA3', '#00B4D8', '#9B5DE5',
+            '#F15BB5', '#FEE440', '#00BBF9', '#00F5D4', '#FF97B7'
+        ];
+        
+        // Initialize
+        initPalette();
+        updateStats();
+        
+        function initPalette() {
+            const palette = document.getElementById('colorPalette');
+            palette.innerHTML = '';
+            
+            paletteColors.forEach(color => {
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'palette-color';
+                colorDiv.style.background = color;
+                colorDiv.title = color;
+                colorDiv.addEventListener('click', () => applyPaletteColor(color));
+                palette.appendChild(colorDiv);
+            });
+        }
+        
+        // Box selection
+        function selectBox(boxId) {
+            const boxes = document.querySelectorAll('.box');
+            
+            boxes.forEach(box => {
+                box.classList.remove('selected');
+            });
+            
+            selectedBox = boxId;
+            document.getElementById(boxId).classList.add('selected');
+            
+            // Update swap button
+            document.getElementById('swapBtn').disabled = false;
+        }
+        
+        // Swap colors between boxes
+        function swapColors() {
+            const box1 = document.getElementById('box1');
+            const box2 = document.getElementById('box2');
+            
+            // Get current colors
+            const color1 = box1.style.background;
+            const color2 = box2.style.background;
+            
+            // Swap colors
+            box1.style.background = color2;
+            box2.style.background = color1;
+            
+            // Update color labels
+            box1.querySelector('.box-color').textContent = getColorCode(color2);
+            box2.querySelector('.box-color').textContent = getColorCode(color1);
+            
+            // Add animation
+            box1.classList.add('swap-animation');
+            box2.classList.add('swap-animation');
+            setTimeout(() => {
+                box1.classList.remove('swap-animation');
+                box2.classList.remove('swap-animation');
+            }, 600);
+            
+            // Update stats
+            swapCount++;
+            updateStats();
+            
+            // Add to history
+            addToHistory(color1, color2);
+            
+            // Deselect boxes
+            selectedBox = null;
+            box1.classList.remove('selected');
+            box2.classList.remove('selected');
+        }
+        
+        // Apply palette color to selected box
+        function applyPaletteColor(color) {
+            if (selectedBox) {
+                const box = document.getElementById(selectedBox);
+                box.style.background = color;
+                box.querySelector('.box-color').textContent = color;
+                
+                uniqueColors.add(color);
+                updateStats();
+                
+                // Add to history
+                addToHistory(null, color, 'palette');
+            } else {
+                alert('Please select a box first!');
+            }
+        }
+        
+        // Apply custom colors
+        function applyCustomColors() {
+            const color1 = document.getElementById('customColor1').value;
+            const color2 = document.getElementById('customColor2').value;
+            
+            const box1 = document.getElementById('box1');
+            const box2 = document.getElementById('box2');
+            
+            box1.style.background = color1;
+            box2.style.background = color2;
+            
+            box1.querySelector('.box-color').textContent = color1;
+            box2.querySelector('.box-color').textContent = color2;
+            
+            // Update text inputs
+            document.getElementById('customColor1Text').value = color1;
+            document.getElementById('customColor2Text').value = color2;
+            
+            uniqueColors.add(color1);
+            uniqueColors.add(color2);
+            updateStats();
+        }
+        
+        // Randomize colors
+        function randomizeColors() {
+            const color1 = getRandomColor();
+            const color2 = getRandomColor();
+            
+            const box1 = document.getElementById('box1');
+            const box2 = document.getElementById('box2');
+            
+            box1.style.background = color1;
+            box2.style.background = color2;
+            
+            box1.querySelector('.box-color').textContent = color1;
+            box2.querySelector('.box-color').textContent = color2;
+            
+            // Update custom color inputs
+            document.getElementById('customColor1').value = color1;
+            document.getElementById('customColor2').value = color2;
+            document.getElementById('customColor1Text').value = color1;
+            document.getElementById('customColor2Text').value = color2;
+            
+            uniqueColors.add(color1);
+            uniqueColors.add(color2);
+            updateStats();
+        }
+        
+        // Match colors (make them complementary)
+        function matchColors() {
+            const box1 = document.getElementById('box1');
+            const currentColor = box1.style.background;
+            const rgb = hexToRGB(getColorCode(currentColor));
+            
+            // Generate complementary color
+            const complementary = {
+                r: 255 - rgb.r,
+                g: 255 - rgb.g,
+                b: 255 - rgb.b
+            };
+            
+            const complementaryHex = rgbToHex(complementary.r, complementary.g, complementary.b);
+            
+            const box2 = document.getElementById('box2');
+            box2.style.background = complementaryHex;
+            box2.querySelector('.box-color').textContent = complementaryHex;
+            
+            // Update custom color inputs
+            document.getElementById('customColor2').value = complementaryHex;
+            document.getElementById('customColor2Text').value = complementaryHex;
+            
+            uniqueColors.add(complementaryHex);
+            updateStats();
+        }
+        
+        // Reset to default colors
+        function resetColors() {
+            const defaultColor1 = '#FF6B6B';
+            const defaultColor2 = '#4ECDC4';
+            
+            const box1 = document.getElementById('box1');
+            const box2 = document.getElementById('box2');
+            
+            box1.style.background = defaultColor1;
+            box2.style.background = defaultColor2;
+            
+            box1.querySelector('.box-color').textContent = defaultColor1;
+            box2.querySelector('.box-color').textContent = defaultColor2;
+            
+            // Update custom color inputs
+            document.getElementById('customColor1').value = defaultColor1;
+            document.getElementById('customColor2').value = defaultColor2;
+            document.getElementById('customColor1Text').value = defaultColor1;
+            document.getElementById('customColor2Text').value = defaultColor2;
+            
+            uniqueColors.clear();
+            uniqueColors.add(defaultColor1);
+            uniqueColors.add(defaultColor2);
+            swapCount = 0;
+            swapHistory = [];
+            updateStats();
+            updateHistory();
+        }
+        
+        // Copy colors to clipboard
+        function copyColors() {
+            const box1 = document.getElementById('box1');
+            const box2 = document.getElementById('box2');
+            
+            const color1 = getColorCode(box1.style.background);
+            const color2 = getColorCode(box2.style.background);
+            
+            const text = `Box 1: ${color1}\nBox 2: ${color2}`;
+            
+            navigator.clipboard.writeText(text)
+                .then(() => alert('Colors copied to clipboard!'))
+                .catch(() => alert('Failed to copy colors'));
+        }
+        
+        // Helper functions
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        function getColorCode(colorString) {
+            if (colorString.startsWith('rgb')) {
+                return rgbToHexString(colorString);
+            }
+            return colorString;
+        }
+        
+        function rgbToHexString(rgbString) {
+            const rgb = rgbString.match(/\d+/g);
+            return rgbToHex(parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2]));
+        }
+        
+        function hexToRGB(hex) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return { r, g, b };
+        }
+        
+        function rgbToHex(r, g, b) {
+            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+        
+        // History functions
+        function addToHistory(color1, color2, type = 'swap') {
+            const entry = {
+                type,
+                color1: color1 ? getColorCode(color1) : null,
+                color2: getColorCode(color2),
+                timestamp: new Date().toLocaleTimeString()
+            };
+            
+            swapHistory.unshift(entry);
+            
+            // Keep only last 10 entries
+            if (swapHistory.length > 10) {
+                swapHistory.pop();
+            }
+            
+            updateHistory();
+        }
+        
+        function updateHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            
+            swapHistory.forEach(entry => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                let content = '';
+                if (entry.type === 'swap') {
+                    content = `
+                        <i class="fas fa-exchange-alt"></i>
+                        <div class="history-colors">
+                            <div class="history-color" style="background: ${entry.color1}"></div>
+                            <i class="fas fa-arrow-right"></i>
+                            <div class="history-color" style="background: ${entry.color2}"></div>
+                        </div>
+                        <span>Swapped colors</span>
+                    `;
+                } else {
+                    content = `
+                        <i class="fas fa-palette"></i>
+                        <div class="history-color" style="background: ${entry.color2}"></div>
+                        <span>Applied color</span>
+                    `;
+                }
+                
+                content += `<span style="margin-left: auto; color: #aaa; font-size: 0.8em;">${entry.timestamp}</span>`;
+                historyItem.innerHTML = content;
+                historyList.appendChild(historyItem);
+            });
+        }
+        
+        // Update stats
+        function updateStats() {
+            document.getElementById('swapCount').textContent = swapCount;
+            document.getElementById('colorCount').textContent = uniqueColors.size;
+            
+            // Calculate color similarity score
+            const box1 = document.getElementById('box1');
+            const box2 = document.getElementById('box2');
+            const color1 = hexToRGB(getColorCode(box1.style.background));
+            const color2 = hexToRGB(getColorCode(box2.style.background));
+            
+            // Calculate color difference
+            const diff = Math.sqrt(
+                Math.pow(color1.r - color2.r, 2) +
+                Math.pow(color1.g - color2.g, 2) +
+                Math.pow(color1.b - color2.b, 2)
+            );
+            
+            const maxDiff = Math.sqrt(3 * Math.pow(255, 2));
+            const similarity = Math.round(((maxDiff - diff) / maxDiff) * 100);
+            document.getElementById('matchScore').textContent = `${similarity}%`;
+        }
+        
+        // Event listeners for custom color inputs
+        document.getElementById('customColor1').addEventListener('input', function() {
+            document.getElementById('customColor1Text').value = this.value;
+        });
+        
+        document.getElementById('customColor2').addEventListener('input', function() {
+            document.getElementById('customColor2Text').value = this.value;
+        });
+        
+        document.getElementById('customColor1Text').addEventListener('input', function() {
+            const value = this.value;
+            if (value.match(/^#[0-9A-F]{6}$/i)) {
+                document.getElementById('customColor1').value = value;
+            }
+        });
+        
+        document.getElementById('customColor2Text').addEventListener('input', function() {
+            const value = this.value;
+            if (value.match(/^#[0-9A-F]{6}$/i)) {
+                document.getElementById('customColor2').value = value;
+            }
+        });
+        
+        // Initialize history
+        updateHistory();
+
+
+        //Api method
+        // State
+        let currentAPI = 'users';
+        let currentData = null;
+        let totalRequests = 0;
+        let successfulRequests = 0;
+        let lastResponseTime = 0;
+        let dataLimit = 10;
+        
+        // API Configuration
+        const apiConfig = {
+            users: {
+                name: 'JSONPlaceholder - Users',
+                url: 'https://jsonplaceholder.typicode.com/users',
+                description: 'Dummy user data for testing'
+            },
+            posts: {
+                name: 'JSONPlaceholder - Posts',
+                url: 'https://jsonplaceholder.typicode.com/posts',
+                description: 'Sample blog posts'
+            },
+            products: {
+                name: 'Fake Store API - Products',
+                url: 'https://fakestoreapi.com/products',
+                description: 'Mock e-commerce products'
+            },
+            photos: {
+                name: 'JSONPlaceholder - Photos',
+                url: 'https://jsonplaceholder.typicode.com/photos',
+                description: 'Sample photos with metadata'
+            },
+            todos: {
+                name: 'JSONPlaceholder - Todos',
+                url: 'https://jsonplaceholder.typicode.com/todos',
+                description: 'Todo items data'
+            },
+            quotes: {
+                name: 'Quotes API',
+                url: 'https://api.quotable.io/quotes?limit=20',
+                description: 'Random inspirational quotes'
+            }
+        };
+        
+        // API selection
+        function selectAPI(api) {
+            currentAPI = api;
+            
+            // Update UI
+            document.querySelectorAll('.api-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update API details
+            const config = apiConfig[api];
+            document.getElementById('currentApiName').textContent = config.name;
+            document.getElementById('apiUrl').textContent = config.url;
+            document.querySelector('.api-details p').textContent = config.description;
+        }
+        
+        // Fetch data from API
+        async function fetchData() {
+            const startTime = Date.now();
+            
+            // Update UI to loading state
+            setStatus('loading', 'Fetching data from API...');
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('dataDisplay').innerHTML = '';
+            document.getElementById('fetchBtn').disabled = true;
+            
+            try {
+                totalRequests++;
+                
+                const config = apiConfig[currentAPI];
+                const response = await fetch(config.url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                currentData = data;
+                
+                // Calculate response time
+                lastResponseTime = Date.now() - startTime;
+                successfulRequests++;
+                
+                // Update UI
+                setStatus('success', `Data fetched successfully in ${lastResponseTime}ms`);
+                displayData(data.slice(0, dataLimit));
+                
+                // Update stats
+                updateStats();
+                
+            } catch (error) {
+                setStatus('error', `Error: ${error.message}`);
+                displayError(error);
+            } finally {
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('fetchBtn').disabled = false;
+            }
+        }
+        
+        // Display data
+        function displayData(data) {
+            const dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = '';
+            
+            if (!data || data.length === 0) {
+                dataDisplay.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 3rem;"></i>
+                        <h3>No Data Available</h3>
+                        <p>The API returned an empty response</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Create grid layout
+            const grid = document.createElement('div');
+            grid.className = 'data-display';
+            
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'data-card';
+                
+                let cardContent = '';
+                
+                switch(currentAPI) {
+                    case 'users':
+                        cardContent = `
+                            <h4><i class="fas fa-user"></i> ${item.name}</h4>
+                            <div class="data-item">
+                                <span class="data-label">Username:</span>
+                                <span class="data-value">${item.username}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Email:</span>
+                                <span class="data-value">${item.email}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Phone:</span>
+                                <span class="data-value">${item.phone}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Website:</span>
+                                <a href="http://${item.website}" target="_blank" class="data-value">${item.website}</a>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Company:</span>
+                                <span class="data-value">${item.company.name}</span>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'posts':
+                        cardContent = `
+                            <h4><i class="fas fa-file-alt"></i> ${item.title.substring(0, 30)}...</h4>
+                            <div class="data-item">
+                                <span class="data-label">User ID:</span>
+                                <span class="data-value">${item.userId}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Body:</span>
+                                <span class="data-value">${item.body.substring(0, 100)}...</span>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'products':
+                        cardContent = `
+                            <h4><i class="fas fa-shopping-bag"></i> ${item.title.substring(0, 30)}...</h4>
+                            <div class="data-item">
+                                <span class="data-label">Price:</span>
+                                <span class="data-value">$${item.price}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Category:</span>
+                                <span class="data-value">${item.category}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Rating:</span>
+                                <span class="data-value">${item.rating.rate} (${item.rating.count} reviews)</span>
+                            </div>
+                            <img src="${item.image}" alt="${item.title}" style="width: 100px; height: 100px; object-fit: contain; margin-top: 10px;">
+                        `;
+                        break;
+                        
+                    case 'photos':
+                        cardContent = `
+                            <h4><i class="fas fa-image"></i> Photo ${item.id}</h4>
+                            <img src="${item.thumbnailUrl}" alt="${item.title}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
+                            <div class="data-item">
+                                <span class="data-label">Title:</span>
+                                <span class="data-value">${item.title}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Album ID:</span>
+                                <span class="data-value">${item.albumId}</span>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'todos':
+                        cardContent = `
+                            <h4><i class="fas fa-tasks"></i> ${item.title.substring(0, 30)}...</h4>
+                            <div class="data-item">
+                                <span class="data-label">User ID:</span>
+                                <span class="data-value">${item.userId}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Completed:</span>
+                                <span class="data-value" style="color: ${item.completed ? '#28a745' : '#dc3545'}">
+                                    ${item.completed ? '✓ Yes' : '✗ No'}
+                                </span>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'quotes':
+                        cardContent = `
+                            <h4><i class="fas fa-quote-left"></i> Quote ${index + 1}</h4>
+                            <div class="data-item" style="flex-direction: column; align-items: flex-start;">
+                                <span class="data-label">Content:</span>
+                                <span class="data-value" style="font-style: italic; margin-top: 5px;">"${item.content}"</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Author:</span>
+                                <span class="data-value">${item.author}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Tags:</span>
+                                <span class="data-value">${item.tags.join(', ')}</span>
+                            </div>
+                        `;
+                        break;
+                }
+                
+                card.innerHTML = cardContent;
+                grid.appendChild(card);
+            });
+            
+            dataDisplay.appendChild(grid);
+        }
+        
+        // Display error
+        function displayError(error) {
+            const dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = `
+                <div class="error-display">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Error Fetching Data</h4>
+                    <p><strong>Message:</strong> ${error.message}</p>
+                    <p><strong>API:</strong> ${apiConfig[currentAPI].url}</p>
+                    <p>Please check your internet connection and try again.</p>
+                </div>
+            `;
+        }
+        
+        // Clear data
+        function clearData() {
+            document.getElementById('dataDisplay').innerHTML = `
+                <div style="text-align: center; padding: 60px; color: #666;">
+                    <i class="fas fa-database" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                    <h3>No Data Loaded</h3>
+                    <p>Select an API and click "Fetch Data" to load information</p>
+                </div>
+            `;
+            setStatus('ready', 'Data cleared');
+        }
+        
+        // View raw JSON
+        function viewRawJSON() {
+            if (!currentData) {
+                alert('No data loaded yet! Please fetch data first.');
+                return;
+            }
+            
+            document.getElementById('dataDisplay').innerHTML = `
+                <div class="json-viewer">
+                    <h4><i class="fas fa-code"></i> Raw JSON Response</h4>
+                    <pre id="jsonOutput"></pre>
+                </div>
+            `;
+            
+            const jsonOutput = document.getElementById('jsonOutput');
+            jsonOutput.textContent = JSON.stringify(currentData.slice(0, dataLimit), null, 2);
+        }
+        
+        // Update data limit
+        function updateLimit() {
+            dataLimit = parseInt(document.getElementById('dataLimit').value);
+            if (currentData) {
+                displayData(currentData.slice(0, dataLimit));
+            }
+        }
+        
+        // Status updates
+        function setStatus(state, message) {
+            const indicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            const responseTime = document.getElementById('responseTime');
+            
+            indicator.className = 'status-indicator';
+            indicator.classList.add(state);
+            
+            statusText.textContent = message;
+            
+            if (state === 'success' && lastResponseTime > 0) {
+                responseTime.textContent = `Response time: ${lastResponseTime}ms`;
+            } else {
+                responseTime.textContent = '';
+            }
+        }
+        
+        // Update stats
+        function updateStats() {
+            document.getElementById('totalRequests').textContent = totalRequests;
+            
+            const successRate = totalRequests > 0 
+                ? Math.round((successfulRequests / totalRequests) * 100) 
+                : 100;
+            document.getElementById('successRate').textContent = `${successRate}%`;
+            
+            document.getElementById('lastResponseTime').textContent = `${lastResponseTime}ms`;
+            
+            const itemCount = currentData ? Math.min(currentData.length, dataLimit) : 0;
+            document.getElementById('dataItems').textContent = itemCount;
+        }
+        
+        // Initialize
+        updateStats();
+
+
+        //power calculator
+
+         // Calculator state
+        let currentValue = '0';
+        let calculation = '';
+        let previousValue = '';
+        let operator = '';
+        let waitingForNewValue = false;
+        let memory = 0;
+        let history = [];
+        
+        // DOM Elements
+        const resultDisplay = document.getElementById('result');
+        const calculationDisplay = document.getElementById('calculation');
+        const memoryDisplay = document.getElementById('memoryDisplay');
+        const historyList = document.getElementById('historyList');
+        
+        // Initialize
+        updateDisplay();
+        updateMemoryDisplay();
+        
+        // Number input
+        function appendNumber(number) {
+            if (waitingForNewValue) {
+                currentValue = number.toString();
+                waitingForNewValue = false;
+            } else {
+                currentValue = currentValue === '0' ? number.toString() : currentValue + number;
+            }
+            updateDisplay();
+        }
+        
+        // Decimal point
+        function appendDecimal() {
+            if (waitingForNewValue) {
+                currentValue = '0.';
+                waitingForNewValue = false;
+            } else if (!currentValue.includes('.')) {
+                currentValue += '.';
+            }
+            updateDisplay();
+        }
+        
+        // Operator input
+        function appendOperator(op) {
+            const inputValue = parseFloat(currentValue);
+            
+            if (operator && !waitingForNewValue) {
+                calculate();
+            }
+            
+            previousValue = currentValue;
+            operator = op;
+            waitingForNewValue = true;
+            
+            calculation = `${previousValue} ${getOperatorSymbol(op)} `;
+            updateCalculationDisplay();
+        }
+        
+        // Calculate result
+        function calculate() {
+            const prev = parseFloat(previousValue);
+            const current = parseFloat(currentValue);
+            let result = 0;
+            
+            if (isNaN(prev) || isNaN(current)) return;
+            
+            switch(operator) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case '*':
+                    result = prev * current;
+                    break;
+                case '/':
+                    result = current !== 0 ? prev / current : 'Error';
+                    break;
+                default:
+                    return;
+            }
+            
+            // Add to history
+            addToHistory(`${previousValue} ${getOperatorSymbol(operator)} ${currentValue} = ${result}`);
+            
+            currentValue = result.toString();
+            calculation = '';
+            operator = '';
+            waitingForNewValue = true;
+            
+            updateDisplay();
+            updateCalculationDisplay();
+        }
+        
+        // Scientific functions
+        function calculateFunction(func) {
+            const value = parseFloat(currentValue);
+            let result = 0;
+            let operation = '';
+            
+            switch(func) {
+                case 'sqrt':
+                    result = value >= 0 ? Math.sqrt(value) : 'Error';
+                    operation = `√(${value})`;
+                    break;
+                case 'square':
+                    result = Math.pow(value, 2);
+                    operation = `(${value})²`;
+                    break;
+                case 'power':
+                    // For power, we need second number
+                    const power = prompt('Enter power (exponent):', '2');
+                    if (power !== null) {
+                        result = Math.pow(value, parseFloat(power));
+                        operation = `(${value})^${power}`;
+                    } else {
+                        return;
+                    }
+                    break;
+                case 'percent':
+                    result = value / 100;
+                    operation = `${value}%`;
+                    break;
+                case 'sin':
+                    result = Math.sin(value * Math.PI / 180);
+                    operation = `sin(${value}°)`;
+                    break;
+                case 'cos':
+                    result = Math.cos(value * Math.PI / 180);
+                    operation = `cos(${value}°)`;
+                    break;
+                case 'tan':
+                    result = Math.tan(value * Math.PI / 180);
+                    operation = `tan(${value}°)`;
+                    break;
+                case 'log':
+                    result = value > 0 ? Math.log10(value) : 'Error';
+                    operation = `log(${value})`;
+                    break;
+                case 'ln':
+                    result = value > 0 ? Math.log(value) : 'Error';
+                    operation = `ln(${value})`;
+                    break;
+                case 'exp':
+                    result = Math.exp(value);
+                    operation = `e^(${value})`;
+                    break;
+                case 'pi':
+                    result = Math.PI;
+                    operation = 'π';
+                    break;
+                case 'factorial':
+                    result = factorial(value);
+                    operation = `${value}!`;
+                    break;
+                case 'sinh':
+                    result = Math.sinh(value);
+                    operation = `sinh(${value})`;
+                    break;
+                case 'cosh':
+                    result = Math.cosh(value);
+                    operation = `cosh(${value})`;
+                    break;
+                case 'tanh':
+                    result = Math.tanh(value);
+                    operation = `tanh(${value})`;
+                    break;
+                case 'reciprocal':
+                    result = value !== 0 ? 1 / value : 'Error';
+                    operation = `1/(${value})`;
+                    break;
+            }
+            
+            // Add to history
+            addToHistory(`${operation} = ${result}`);
+            
+            currentValue = result.toString();
+            updateDisplay();
+        }
+        
+        // Helper function for factorial
+        function factorial(n) {
+            if (n < 0 || !Number.isInteger(n)) return 'Error';
+            if (n === 0 || n === 1) return 1;
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+        
+        // Clear functions
+        function clearAll() {
+            currentValue = '0';
+            calculation = '';
+            previousValue = '';
+            operator = '';
+            waitingForNewValue = false;
+            updateDisplay();
+            updateCalculationDisplay();
+        }
+        
+        function clearEntry() {
+            currentValue = '0';
+            updateDisplay();
+        }
+        
+        function clearHistory() {
+            history = [];
+            updateHistory();
+        }
+        
+        // Backspace
+        function backspace() {
+            if (currentValue.length > 1) {
+                currentValue = currentValue.slice(0, -1);
+            } else {
+                currentValue = '0';
+            }
+            updateDisplay();
+        }
+        
+        // Toggle sign
+        function toggleSign() {
+            currentValue = (parseFloat(currentValue) * -1).toString();
+            updateDisplay();
+        }
+        
+        // Memory functions
+        function memoryClear() {
+            memory = 0;
+            updateMemoryDisplay();
+        }
+        
+        function memoryRecall() {
+            currentValue = memory.toString();
+            updateDisplay();
+        }
+        
+        function memoryAdd() {
+            memory += parseFloat(currentValue) || 0;
+            updateMemoryDisplay();
+        }
+        
+        function memorySubtract() {
+            memory -= parseFloat(currentValue) || 0;
+            updateMemoryDisplay();
+        }
+        
+        // Unit converter
+        function convertUnits() {
+            const input = parseFloat(document.getElementById('converterInput').value);
+            const fromUnit = document.getElementById('converterFrom').value;
+            const toUnit = document.getElementById('converterTo').value;
+            
+            if (isNaN(input)) {
+                document.getElementById('converterResult').textContent = 'Result: Invalid input';
+                return;
+            }
+            
+            // Convert to meters first (base unit)
+            let inMeters = 0;
+            
+            // Convert from unit to meters
+            switch(fromUnit) {
+                case 'cm': inMeters = input / 100; break;
+                case 'm': inMeters = input; break;
+                case 'km': inMeters = input * 1000; break;
+                case 'in': inMeters = input * 0.0254; break;
+                case 'ft': inMeters = input * 0.3048; break;
+                case 'mi': inMeters = input * 1609.34; break;
+            }
+            
+            // Convert from meters to target unit
+            let result = 0;
+            switch(toUnit) {
+                case 'cm': result = inMeters * 100; break;
+                case 'm': result = inMeters; break;
+                case 'km': result = inMeters / 1000; break;
+                case 'in': result = inMeters / 0.0254; break;
+                case 'ft': result = inMeters / 0.3048; break;
+                case 'mi': result = inMeters / 1609.34; break;
+            }
+            
+            document.getElementById('converterResult').textContent = 
+                `Result: ${input} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+        }
+        
+        // Helper functions
+        function getOperatorSymbol(op) {
+            switch(op) {
+                case '+': return '+';
+                case '-': return '-';
+                case '*': return '×';
+                case '/': return '÷';
+                default: return op;
+            }
+        }
+        
+        // Update displays
+        function updateDisplay() {
+            resultDisplay.textContent = currentValue;
+        }
+        
+        function updateCalculationDisplay() {
+            calculationDisplay.textContent = calculation;
+        }
+        
+        function updateMemoryDisplay() {
+            memoryDisplay.textContent = `Memory: ${memory}`;
+        }
+        
+        // History functions
+        function addToHistory(entry) {
+            history.unshift(entry);
+            if (history.length > 20) {
+                history.pop();
+            }
+            updateHistory();
+        }
+        
+        function updateHistory() {
+            historyList.innerHTML = '';
+            
+            history.forEach(entry => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const parts = entry.split(' = ');
+                historyItem.innerHTML = `
+                    <div class="history-expression">${parts[0]}</div>
+                    <div class="history-result">${parts[1]}</div>
+                `;
+                
+                historyList.appendChild(historyItem);
+            });
+        }
+        
+        // Keyboard support
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            
+            // Numbers
+            if (key >= '0' && key <= '9') {
+                appendNumber(parseInt(key));
+            }
+            
+            // Decimal point
+            else if (key === '.') {
+                appendDecimal();
+            }
+            
+            // Operators
+            else if (['+', '-', '*', '/'].includes(key)) {
+                appendOperator(key);
+            }
+            
+            // Equals or Enter
+            else if (key === '=' || key === 'Enter') {
+                calculate();
+            }
+            
+            // Escape for clear
+            else if (key === 'Escape') {
+                clearAll();
+            }
+            
+            // Backspace
+            else if (key === 'Backspace') {
+                backspace();
+            }
+            
+            // Prevent default for calculator keys
+            if (['0','1','2','3','4','5','6','7','8','9','+','-','*','/','.','=','Enter','Escape','Backspace'].includes(key)) {
+                event.preventDefault();
+            }
+        });
+        
+        // Initialize history
+        updateHistory();

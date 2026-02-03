@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Fetch Demo</title>
+   <link rel="stylesheet" href="Apifetch.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-database"></i> API Fetch Demo</h1>
+            <p class="subtitle">Fetch and display data from various public APIs</p>
+        </header>
+        
+        <div class="api-selector">
+            <h3><i class="fas fa-plug"></i> Select API Endpoint</h3>
+            <div class="api-buttons">
+                <button class="api-btn active" onclick="selectAPI('users')">
+                    <i class="fas fa-users"></i>
+                    Users Data
+                </button>
+                <button class="api-btn" onclick="selectAPI('posts')">
+                    <i class="fas fa-newspaper"></i>
+                    Blog Posts
+                </button>
+                <button class="api-btn" onclick="selectAPI('products')">
+                    <i class="fas fa-shopping-cart"></i>
+                    Products
+                </button>
+                <button class="api-btn" onclick="selectAPI('photos')">
+                    <i class="fas fa-camera"></i>
+                    Photos
+                </button>
+                <button class="api-btn" onclick="selectAPI('todos')">
+                    <i class="fas fa-tasks"></i>
+                    Todos
+                </button>
+                <button class="api-btn" onclick="selectAPI('quotes')">
+                    <i class="fas fa-quote-right"></i>
+                    Random Quotes
+                </button>
+            </div>
+            
+            <div class="api-details">
+                <h4>Current API: <span id="currentApiName">JSONPlaceholder - Users</span></h4>
+                <pre id="apiUrl">https://jsonplaceholder.typicode.com/users</pre>
+                <p>This API returns dummy user data for testing and prototyping.</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" onclick="fetchData()" id="fetchBtn">
+                <i class="fas fa-download"></i> Fetch Data
+            </button>
+            <button class="control-btn secondary" onclick="clearData()">
+                <i class="fas fa-trash"></i> Clear Results
+            </button>
+            <button class="control-btn secondary" onclick="viewRawJSON()">
+                <i class="fas fa-code"></i> View Raw JSON
+            </button>
+            <select id="dataLimit" onchange="updateLimit()" style="padding: 12px; border: 2px solid #ddd; border-radius: 10px;">
+                <option value="5">Show 5 items</option>
+                <option value="10" selected>Show 10 items</option>
+                <option value="20">Show 20 items</option>
+                <option value="50">Show 50 items</option>
+            </select>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText">Ready to fetch data</span>
+            <span id="responseTime" style="margin-left: auto; color: #666;"></span>
+        </div>
+        
+        <div class="results-container" id="resultsContainer">
+            <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+                <i class="fas fa-spinner"></i>
+                <h3>Fetching data...</h3>
+                <p>Please wait while we retrieve the data</p>
+            </div>
+            
+            <div id="dataDisplay">
+                <!-- Data will be displayed here -->
+                <div style="text-align: center; padding: 60px; color: #666;">
+                    <i class="fas fa-database" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                    <h3>No Data Loaded</h3>
+                    <p>Select an API and click "Fetch Data" to load information</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="totalRequests">0</div>
+                <div class="stat-label">Total Requests</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="successRate">100%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="lastResponseTime">0ms</div>
+                <div class="stat-label">Last Response Time</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="dataItems">0</div>
+                <div class="stat-label">Items Loaded</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>All data is fetched from public APIs for demonstration purposes</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="Apifetch.js"></script>
+</body>
+</html>

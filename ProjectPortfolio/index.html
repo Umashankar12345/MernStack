@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Portfolio - 10 Interactive Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-code"> Project Portfolio </i></h1>
+            <p>10 Interactive Web Projects | Click any project to view and run</p>
+        </header>
+
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search projects by name, technology, or description...">
+                <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+                <button id="reset-btn"><i class="fas fa-redo"></i> Reset</button>
+            </div>
+            <div class="filter-tags" id="filter-tags">
+                <div class="filter-tag active" data-filter="all">All Projects</div>
+                <div class="filter-tag" data-filter="calculator">Calculator</div>
+                <div class="filter-tag" data-filter="form">Forms</div>
+                <div class="filter-tag" data-filter="game">Games</div>
+                <div class="filter-tag" data-filter="utility">Utility</div>
+                <div class="filter-tag" data-filter="api">API</div>
+                <div class="filter-tag" data-filter="stopwash">Stopwatch</div>
+            </div>
+        </section>
+
+        <section class="projects-container" id="projects-container">
+            <!-- Projects loaded dynamically -->
+        </section>
+
+        <div class="project-modal" id="project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Project Title</h2>
+                    <button class="close-modal" id="close-modal">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Project details loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="launch-btn" id="launch-project">
+                        <i class="fas fa-rocket"></i> Launch Project
+                    </button>
+                    <button class="view-code-btn" id="view-code">
+                        <i class="fas fa-code"></i> View Code
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Project Portfolio &copy; 2023 | All 10 projects are fully functional with complete features</p>
+            <p class="tech-stack">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">LocalStorage</span>
+                <span class="tech-tag">API</span>
+            </p>
+        </footer>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

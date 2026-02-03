@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form with Validation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="Form.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-signature"></i> Registration Form</h1>
+            <p class="subtitle">Complete the form with valid information</p>
+        </header>
+        
+        <form id="registrationForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="firstName" class="required">First Name</label>
+                    <input type="text" id="firstName" placeholder="Enter first name">
+                    <div class="error-message" id="firstNameError">Please enter a valid first name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName" class="required">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Enter last name">
+                    <div class="error-message" id="lastNameError">Please enter a valid last name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter email address">
+                    <div class="error-message" id="emailError">Please enter a valid email</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone" class="required">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter phone number">
+                    <div class="error-message" id="phoneError">Please enter a valid 10-digit phone number</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="required">Password</label>
+                    <input type="password" id="password" placeholder="Create password">
+                    <div class="error-message" id="passwordError">Password must be at least 8 characters</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword" class="required">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
+                    <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country">
+                        <option value="">Select country</option>
+                        <option value="US">United States</option>
+                        <option value="IN">India</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" id="dateOfBirth">
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Gender</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="male" name="gender" value="male">
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="other" name="gender" value="other">
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Interests</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="coding" value="coding">
+                            <label for="coding">Coding</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="design" value="design">
+                            <label for="design">Design</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="music" value="music">
+                            <label for="music">Music</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="sports" value="sports">
+                            <label for="sports">Sports</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="bio">Bio/About</label>
+                    <textarea id="bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="terms" class="required">
+                        <label for="terms">I agree to the terms and conditions</label>
+                    </div>
+                    <div class="error-message" id="termsError">You must agree to the terms</div>
+                </div>
+                
+                <div class="form-footer">
+                    <button type="button" class="reset-btn" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Form
+                    </button>
+                </div>
+            </div>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <h3>Form Submitted Successfully!</h3>
+            <p>Your registration has been completed.</p>
+        </div>
+        
+        <div class="preview-section" id="previewSection">
+            <h3><i class="fas fa-eye"></i> Form Data Preview</h3>
+            <div class="preview-grid" id="previewGrid">
+                <!-- Preview will be added here -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>All fields marked with * are required</p>
+        </footer>
+    </div>
+
+    <script src="Form.js"></script>
+</body>
+</html>

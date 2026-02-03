@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Swap Pro</title>
+        <link rel="stylesheet" href="Boxswap.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-shuffle"></i> Box Swap Pro</h1>
+            <p class="subtitle">Advanced box swapping with multiple patterns and modes</p>
+        </header>
+        
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-number" id="movesCount">0</div>
+                <div class="stat-label">Moves</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="timeCount">00:00</div>
+                <div class="stat-label">Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="accuracyRate">100%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+        
+        <div class="main-layout">
+            <div class="swap-area" id="swapArea">
+                <!-- 4x4 grid of boxes -->
+            </div>
+            
+            <div class="controls-panel">
+                <div class="panel-section">
+                    <h3><i class="fas fa-gamepad"></i> Game Mode</h3>
+                    <div class="mode-selector">
+                        <button class="mode-btn active" onclick="setMode('drag')">
+                            <i class="fas fa-arrows-alt"></i> Drag & Drop
+                        </button>
+                        <button class="mode-btn" onclick="setMode('click')">
+                            <i class="fas fa-mouse-pointer"></i> Click to Swap
+                        </button>
+                        <button class="mode-btn" onclick="setMode('auto')">
+                            <i class="fas fa-robot"></i> Auto Solve
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h3><i class="fas fa-th-large"></i> Pattern</h3>
+                    <div class="pattern-buttons">
+                        <button class="pattern-btn active" onclick="setPattern('normal')">1</button>
+                        <button class="pattern-btn" onclick="setPattern('checker')">2</button>
+                        <button class="pattern-btn" onclick="setPattern('spiral')">3</button>
+                        <button class="pattern-btn" onclick="setPattern('diagonal')">4</button>
+                        <button class="pattern-btn" onclick="setPattern('random')">5</button>
+                        <button class="pattern-btn" onclick="setPattern('custom')">6</button>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h3><i class="fas fa-sliders-h"></i> Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="shuffleBoxes()">
+                            <i class="fas fa-random"></i> Shuffle
+                        </button>
+                        <button class="action-btn success" onclick="solvePuzzle()">
+                            <i class="fas fa-check"></i> Solve
+                        </button>
+                        <button class="action-btn secondary" onclick="resetGame()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="action-btn warning" onclick="hint()">
+                            <i class="fas fa-lightbulb"></i> Hint
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <h3><i class="fas fa-cog"></i> Settings</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label style="display: flex; justify-content: space-between;">
+                            <span>Grid Size:</span>
+                            <select id="gridSize" onchange="changeGridSize()">
+                                <option value="3">3x3</option>
+                                <option value="4" selected>4x4</option>
+                                <option value="5">5x5</option>
+                                <option value="6">6x6</option>
+                            </select>
+                        </label>
+                        <label style="display: flex; justify-content: space-between;">
+                            <span>Animation Speed:</span>
+                            <select id="animationSpeed" onchange="changeAnimationSpeed()">
+                                <option value="slow">Slow</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="fast">Fast</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="history-panel">
+            <h4><i class="fas fa-history"></i> Move History</h4>
+            <div id="historyList">
+                <!-- Move history will appear here -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>Drag boxes or click to swap. Try different patterns and challenge yourself!</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="Boxswapro.js"></script>
+</body>
+</html>
