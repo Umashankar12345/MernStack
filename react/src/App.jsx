@@ -130,3 +130,36 @@
 // }
 
 // export default App
+import React, { useState } from "react";
+// import Register from "./Register";
+// import Login from "./Login";
+// import Success from "./Success";
+import Login from "./Page/Login";
+import Register from "./Page/Register";
+import sucess from "./Page/Sucess";
+
+function App() {
+  const [page, setPage] = useState("register");
+  const [user, setUser] = useState(null);
+
+  return (
+    <div>
+      {page === "register" && (
+        <Register onRegister={() => setPage("login")} />
+      )}
+
+      {page === "login" && (
+        <Login
+          onLogin={(userData) => {
+            setUser(userData);
+            setPage("success");
+          }}
+        />
+      )}
+
+      {page === "success" && <Success user={user} />}
+    </div>
+  );
+}
+
+export default App;
