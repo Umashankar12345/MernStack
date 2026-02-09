@@ -1,8 +1,7 @@
 // src/components/Login/Login.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-// import { useAuth } from '../../hooks/useAuth';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import { Mail, Lock } from 'lucide-react';
 
 function Login() {

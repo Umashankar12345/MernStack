@@ -8,7 +8,7 @@ function MovieCard({ movie }) {
       to={`/booking/${movie.id}`}
       className="movie-card group block"
     >
-      <div className="relative h-64 overflow-hidden rounded-t-xl">
+      <div className="relative aspect-poster overflow-hidden rounded-t-xl">
         <img
           src={movie.image || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&fit=crop'}
           alt={movie.title}

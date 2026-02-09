@@ -1,6 +1,6 @@
 // src/context/MovieContext.jsx
 import React, { createContext, useState, useContext } from 'react';
-import { getRandomMovies, searchMovies } from '../services/movieService';
+import { getRandomMovies, searchMovies, getMovieById } from '../services/movieService';
 
 export const MovieContext = createContext();
 
@@ -56,6 +56,20 @@ export const MovieProvider = ({ children }) => {
     setFilteredMovies(filtered);
   };
 
+  const getMovieByIdFromContext = async (id) => {
+    try {
+      setLoading(true);
+      const movie = await getMovieById(id);
+      return movie;
+    } catch (err) {
+      setError('Failed to fetch movie details');
+      console.error('Error fetching movie:', err);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     movies,
     filteredMovies,
@@ -65,7 +79,8 @@ export const MovieProvider = ({ children }) => {
     setSelectedMovie,
     fetchMovies,
     searchMoviesByQuery,
-    filterMoviesByGenre
+    filterMoviesByGenre,
+    getMovieById: getMovieByIdFromContext
   };
 
   return (

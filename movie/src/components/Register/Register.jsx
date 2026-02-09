@@ -70,9 +70,9 @@ function Register() {
         bookings: []
       };
 
-      const success = register(userData);
+      const result = await register(userData, '/');
       
-      if (success) {
+      if (result.success) {
         // Clear form
         setFormData({
           name: '',
@@ -85,6 +85,8 @@ function Register() {
         
         // Navigate to home page
         navigate('/');
+      } else {
+        setErrors({ submit: result.error || 'Registration failed' });
       }
     } catch (error) {
       setErrors({ submit: error.message });

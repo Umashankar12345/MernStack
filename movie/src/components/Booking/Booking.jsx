@@ -37,19 +37,25 @@ function Booking({ movie }) {
     setLoading(true)
     
     try {
-      const user = JSON.parse(localStorage.getItem('user'))
+      // Get user from correct localStorage key
+      const userJson = localStorage.getItem('bookmyshow_user')
+      if (!userJson) {
+        alert('Please login to continue with booking')
+        navigate('/login')
+        return
+      }
+      const user = JSON.parse(userJson)
       
       const bookingData = {
         movie: {
           name: movie.name,
-          image: movie.image?.medium,
-          rating: movie.rating?.average,
-          genres: movie.genres,
+          image: movie.image?.medium || movie.image?.original,
+          rating: movie.rating?.average || 'N/A',
+          genres: movie.genres || [],
         },
         user: {
           name: user.name,
           email: user.email,
-          roll: user.roll,
         },
         tickets: {
           seats,
@@ -381,7 +387,7 @@ function Booking({ movie }) {
       <div className="card p-8">
         <div className="flex items-start space-x-6 mb-8">
           <img
-            src={movie.image?.medium || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&fit=crop'}
+            src={movie.image?.medium || movie.image?.original || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&fit=crop'}
             alt={movie.name}
             className="w-32 h-48 object-cover rounded-lg"
           />

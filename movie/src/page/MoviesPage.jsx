@@ -5,14 +5,16 @@ import MovieFilter from '../components/MovieList/MovieFilter';
 import { Search, Filter, Grid, List } from 'lucide-react';
 
 function MoviesPage() {
-  const { filterMovies } = useMovies();
+  const { searchMoviesByQuery } = useMovies();
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState('grid');
   
   const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
-    filterMovies({ search: term });
+    if (term.trim()) {
+      searchMoviesByQuery(term);
+    }
   };
   
   return (

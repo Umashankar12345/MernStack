@@ -16,10 +16,11 @@ function BookingPage() {
     const fetchMovie = async () => {
       setLoading(true);
       try {
-        const movieData = getMovieById(parseInt(movieId));
+        const movieData = await getMovieById(parseInt(movieId));
         if (movieData) {
           setMovie(movieData);
-          initializeBooking(movieData.id, movieData.title);
+          // Initialize booking with the movie's ID and name (not title)
+          initializeBooking(movieData.id, movieData.name);
         }
       } catch (error) {
         console.error('Error fetching movie:', error);
@@ -62,16 +63,16 @@ function BookingPage() {
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="w-48 h-64 rounded-xl overflow-hidden">
             <img
-              src={movie.image}
-              alt={movie.title}
+              src={movie.image?.medium || movie.image?.original || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&fit=crop'}
+              alt={movie.name}
               className="w-full h-full object-cover"
             />
           </div>
           
           <div className="flex-1">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">{movie.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">{movie.name}</h1>
             <div className="flex flex-wrap gap-2 mb-4">
-              {movie.genre.map((genre, index) => (
+              {movie.genres?.map((genre, index) => (
                 <span
                   key={index}
                   className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm"
@@ -80,24 +81,24 @@ function BookingPage() {
                 </span>
               ))}
             </div>
-            <p className="text-gray-300 mb-6">{movie.description}</p>
+            <p className="text-gray-300 mb-6">{movie.summary?.replace(/<[^>]*>/g, '').substring(0, 300) || 'No description available'}...</p>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <div className="text-sm text-gray-300">Rating</div>
-                <div className="text-2xl font-bold text-yellow-400">{movie.rating} ⭐</div>
+                <div className="text-2xl font-bold text-yellow-400">{movie.rating?.average || 'N/A'} ⭐</div>
               </div>
               <div>
                 <div className="text-sm text-gray-300">Duration</div>
-                <div className="text-2xl font-bold">{movie.duration}</div>
+                <div className="text-2xl font-bold">{movie.runtime || '120'} min</div>
               </div>
               <div>
                 <div className="text-sm text-gray-300">Language</div>
-                <div className="text-xl font-bold">{movie.language}</div>
+                <div className="text-xl font-bold">{movie.language || 'English'}</div>
               </div>
               <div>
                 <div className="text-sm text-gray-300">Price</div>
-                <div className="text-2xl font-bold text-bms-red">₹{movie.price}</div>
+                <div className="text-2xl font-bold text-bms-red">₹250</div>
               </div>
             </div>
           </div>

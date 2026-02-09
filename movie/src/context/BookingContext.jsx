@@ -7,6 +7,15 @@ export const BookingProvider = ({ children }) => {
   const [bookings, setBookings] = useState([]);
   const [currentBooking, setCurrentBooking] = useState(null);
 
+  const initializeBooking = (movieId, movieName) => {
+    const bookingData = {
+      movieId,
+      movieName,
+      startedAt: new Date().toISOString()
+    };
+    setCurrentBooking(bookingData);
+  };
+
   const saveBooking = (bookingData) => {
     const newBooking = {
       ...bookingData,
@@ -46,6 +55,7 @@ export const BookingProvider = ({ children }) => {
     bookings,
     currentBooking,
     setCurrentBooking,
+    initializeBooking,
     saveBooking,
     getBookings,
     cancelBooking

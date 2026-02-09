@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 // import FetchApi from './FetchApi.jsx'
-// import FetchMovie from './FetchMovie.jsx'
+import FetchMovie from './FetchMovie.jsx'
 // import Login from './component/Login.jsx'
 // import Home from './Home.jsx'
 // import Block1 from './Block1.jsx'
@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')).render(
   {/* //  <Block3/> */}
   {/* //   <Block4/> */} 
   {/* <FetchApi/> */}
-  {/* <FetchMovie/> */}
+  <FetchMovie/>
   {/* <Login/> */}
  
   </StrictMode>

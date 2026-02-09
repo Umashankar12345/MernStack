@@ -131,6 +131,7 @@
 
 // export default App
 import React, { useState } from "react";
+import { BackgroundGradientDemo } from "./ui/background-gradient";
 // import Register from "./Register";
 // import Login from "./Login";
 // import Success from "./Success";
@@ -144,6 +145,7 @@ function App() {
 
   return (
     <div>
+      <BackgroundGradientDemo />
       {page === "register" && (
         <Register onRegister={() => setPage("login")} />
       )}
