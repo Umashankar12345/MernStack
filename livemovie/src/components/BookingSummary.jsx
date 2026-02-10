@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BookingSummary = ({ movie, seats, user, onBookingComplete }) => {
+const BookingSummary = ({ movie, seats, user, onBookingComplete, posture }) => {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
   const [isProcessing, setIsProcessing] = useState(false);
 
   const calculateTotal = () => {
+    if (posture && posture.priceMultiplier) {
+      return Math.round(seats.length * 200 * posture.priceMultiplier);
+    }
     return seats.length * 200;
   };
 
@@ -22,12 +25,13 @@ const BookingSummary = ({ movie, seats, user, onBookingComplete }) => {
         bookingId: generateBookingId(),
         movie: movie.title,
         seats: seats,
-        totalAmount: calculateTotal(),
+        totalAmount: calculateTotal() + 30,
         showtime: '6:00 PM',
         bookingDate: new Date().toLocaleDateString(),
         paymentMethod: paymentMethod,
         user: user.name,
-        email: user.email
+        email: user.email,
+        posture: posture
       };
       
       onBookingComplete(bookingData);
@@ -90,8 +94,22 @@ const BookingSummary = ({ movie, seats, user, onBookingComplete }) => {
               </div>
               <div style={styles.detailRow}>
                 <span>Price per Seat:</span>
-                <span>₹200</span>
+                <span>
+                  {posture ? `₹${Math.round(200 * posture.priceMultiplier)}-₹${Math.round(250 * posture.priceMultiplier)}` : '₹200'}
+                </span>
               </div>
+              
+              {posture && (
+                <div style={styles.detailRow}>
+                  <span>Seating Type:</span>
+                  <span style={{ fontWeight: 'bold' }}>
+                    {posture.name} {posture.icon}
+                    <span style={{ marginLeft: '8px', fontSize: '14px', color: '#666' }}>
+                      (×{posture.priceMultiplier} multiplier)
+                    </span>
+                  </span>
+                </div>
+              )}
             </div>
             
             <div style={styles.detailSection}>
@@ -144,7 +162,7 @@ const BookingSummary = ({ movie, seats, user, onBookingComplete }) => {
             
             <div style={styles.totalSection}>
               <div style={styles.totalRow}>
-                <span>Subtotal:</span>
+                <span>Seat Charges ({seats.length} seats):</span>
                 <span>₹{calculateTotal()}</span>
               </div>
               <div style={styles.totalRow}>
@@ -157,7 +175,7 @@ const BookingSummary = ({ movie, seats, user, onBookingComplete }) => {
               </div>
             </div>
           </div>
-          
+
           <div style={styles.actionButtons}>
             <button
               onClick={() => navigate('/select-seats')}
