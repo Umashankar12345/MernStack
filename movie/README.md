@@ -27,4 +27,4 @@ A complete movie ticket booking web application built with React.js, simulating 
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd bookmyshow-movie-app
+cd bookmyshow-movie-appnpnp

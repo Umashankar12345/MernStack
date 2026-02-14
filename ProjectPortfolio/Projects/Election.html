@@ -3,28 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
- <title>Voting day</title>
-
- <link rel="stylesheet" href="Election.css">
+    <title>Voting Day</title>
+    <link rel="stylesheet" href="election.css">
 </head>
 <body>
- 
-        <h1>Voting counter</h1>
-  <div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-vote-yea"></i> Voting Counter</h1>
+            <p class="subtitle">Click to cast your vote for your preferred party</p>
+        </header>
+        
+        <div class="voting-section">
+            <div class="vote-buttons">
+                <button type="button" class="vote-btn bjp-btn" onclick="voteBjp()">
+                    <i class="fas fa-lotus"></i> BJP
+                </button>
+                <button type="button" class="vote-btn congress-btn" onclick="voteCongress()">
+                    <i class="fas fa-hand"></i> Congress
+                </button>
+                <button type="button" class="vote-btn nota-btn" onclick="voteNota()">
+                    <i class="fas fa-ban"></i> NOTA
+                </button>
+            </div>
+            
+            <div class="results" id="result">
+                <h2>Current Results</h2>
+                <div class="result-item">
+                    <span class="party-name bjp-color">BJP:</span>
+                    <span class="vote-count" id="Bjpresult">0 votes</span>
+                </div>
+                <div class="result-item">
+                    <span class="party-name congress-color">Congress:</span>
+                    <span class="vote-count" id="congressresult">0 votes</span>
+                </div>
+                <div class="result-item">
+                    <span class="party-name nota-color">NOTA:</span>
+                    <span class="vote-count" id="notaresult">0 votes</span>
+                </div>
+                
+                <div class="total-votes">
+                    <strong>Total Votes Cast:</strong>
+                    <span id="totalVotes">0</span>
+                </div>
+            </div>
+            
+            <div class="reset-section">
+                <button type="button" class="reset-btn" onclick="resetVotes()">
+                    <i class="fas fa-redo"></i> Reset All Votes
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Voting System Demo &copy; 2024 | Made for educational purposes</p>
+        </footer>
+    </div>
 
-    <button type="button" onclick="VoteBjp()">BJP</button>
-   
-
-    <button type="button" onClick="VoteCongress()">Congress</button>
-   
-    <button type="button" onclick="VoteNota()">Nota</button>
-</div>
-<br>
-<div id="result">
-    <p id="Bjpresult"></p>
-    <p id="congressresult"></p>
-    <p id="notaresult"></p>
-</div> 
-
-<script src="Election.js"></script>
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="election.js"></script>
+</body>
+</html>
