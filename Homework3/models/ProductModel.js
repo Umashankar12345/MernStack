@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const  productSchema = new mongoose.Schema({
     productName : {
-        type: string ,
+        type: String ,
         required: true
     },
     productprice : {
@@ -10,7 +10,7 @@ const  productSchema = new mongoose.Schema({
         required: true
     },
     productCategory : {
-        type: stringify,
+        type: String,
         required: true
     },
     productStock : {
@@ -19,7 +19,7 @@ const  productSchema = new mongoose.Schema({
     }
 
 }, {
-    timestamps: true
+    timestamps: true  // automatically add create and update At
 });
 
 const Product = mongoose.model("product" , productSchema);
